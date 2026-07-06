@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#06020e">
+<meta name="description" content="Caldrisia — A universe of games, stories, crypto and community. Explore, Play, Earn, Belong. Powered by $CAL-D on Solana.">
+<title>Caldrisia — Explore · Play · Belong</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #06020e;
+  --bg2:    #0c0519;
+  --bg3:    #120820;
+  --bg4:    #1a0e2e;
+  --purple: #9945FF;
+  --pink:   #FF2D9B;
+  --cyan:   #00E5FF;
+  --gold:   #FFB800;
+  --green:  #00FF9D;
+  --white:  #F0EEFF;
+  --dim:    rgba(240,238,255,0.58);
+  --muted:  rgba(240,238,255,0.32);
+  --border: rgba(153,69,255,0.14);
+  --borderb:rgba(153,69,255,0.32);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Exo 2', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ── AMBIENT ── */
+.orb { position: fixed; border-radius: 50%; pointer-events: none; filter: blur(110px); }
+.orb-1 { width:700px;height:700px;background:radial-gradient(circle,rgba(153,69,255,.09),transparent 70%);top:-200px;left:-150px;animation:orbf 14s ease-in-out infinite; }
+.orb-2 { width:500px;height:500px;background:radial-gradient(circle,rgba(0,229,255,.06),transparent 70%);top:40%;right:-100px;animation:orbf 18s ease-in-out infinite;animation-delay:-5s; }
+.orb-3 { width:400px;height:400px;background:radial-gradient(circle,rgba(255,45,155,.05),transparent 70%);bottom:5%;left:15%;animation:orbf 16s ease-in-out infinite;animation-delay:-9s; }
+@keyframes orbf { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-50px) scale(1.06)} }
+
+/* ── NOISE ── */
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:0;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:900;
+  height:62px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px;
+  background:rgba(6,2,14,.88);
+  backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
+.nav-logo img { width:36px; height:36px; border-radius:50%; object-fit:cover; border:1.5px solid rgba(153,69,255,.4); box-shadow:0 0 12px rgba(153,69,255,.3); }
+.nav-logo-name {
+  font-family:'Orbitron',sans-serif; font-size:17px; font-weight:700; letter-spacing:.08em;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.nav-menu { display:flex; align-items:center; gap:4px; list-style:none; }
+.nav-menu a {
+  font-size:13px; font-weight:500; color:var(--muted);
+  text-decoration:none; padding:6px 13px; border-radius:6px;
+  letter-spacing:.04em; text-transform:uppercase;
+  transition:color .15s, background .15s;
+}
+.nav-menu a:hover { color:var(--white); background:rgba(153,69,255,.1); }
+.nav-cta {
+  font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700; letter-spacing:.1em;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff; border:none; padding:10px 22px; border-radius:6px;
+  cursor:pointer; text-decoration:none; display:inline-block;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 0 18px rgba(153,69,255,.3);
+}
+.nav-cta:hover { transform:translateY(-2px); box-shadow:0 4px 24px rgba(153,69,255,.5); }
+#burger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; }
+#burger span { display:block; width:22px; height:2px; background:var(--cyan); border-radius:2px; }
+#drawer {
+  display:none; position:fixed; top:0; right:0; width:260px; height:100%;
+  background:#09031a; border-left:1px solid var(--border);
+  z-index:9100; padding:72px 0 40px; overflow-y:auto;
+}
+#drawer a {
+  display:block; padding:14px 24px; font-size:14px; font-weight:500;
+  color:var(--dim); text-decoration:none;
+  border-bottom:1px solid rgba(153,69,255,.07);
+  letter-spacing:.04em; text-transform:uppercase;
+  transition:color .15s, background .15s;
+}
+#drawer a:hover { color:var(--cyan); background:rgba(0,229,255,.05); }
+#dimmer { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9050; }
+
+/* ── EXPLORER FEED (ticker) ── */
+.explorer-feed {
+  margin-top:62px; height:40px; overflow:hidden;
+  background:rgba(153,69,255,.05);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center;
+  position:relative; z-index:1;
+}
+.explorer-feed:hover .feed-inner { animation-play-state:paused; }
+.feed-label {
+  font-family:'Orbitron',sans-serif; font-size:9px; font-weight:600;
+  letter-spacing:.14em; color:var(--purple);
+  padding:0 16px; flex-shrink:0;
+  border-right:1px solid var(--border);
+  white-space:nowrap;
+}
+.feed-inner {
+  display:flex; white-space:nowrap; align-items:center;
+  animation:feedscroll 35s linear infinite;
+  padding-left:16px;
+}
+@keyframes feedscroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.feed-item {
+  font-family:'Exo 2',sans-serif; font-weight:400;
+  font-size:12px; color:var(--muted); letter-spacing:.04em;
+  padding:0 22px; display:inline-flex; align-items:center; gap:8px;
+  white-space:nowrap;
+}
+.feed-item.bright { color:var(--cyan); }
+.feed-item.gold   { color:var(--gold); }
+.feed-item.pink   { color:var(--pink); }
+.feed-sep { color:rgba(153,69,255,.25); font-size:10px; flex-shrink:0; }
+
+/* ── HERO ── */
+.hero {
+  min-height:100svh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:120px 24px 80px;
+  position:relative; z-index:1;
+  text-align:center; overflow:hidden;
+}
+
+.hero-log {
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(0,229,255,.2);
+  background:rgba(0,229,255,.05);
+  border-radius:100px; padding:6px 18px;
+  font-family:'Orbitron',sans-serif; font-size:9px;
+  color:var(--cyan); letter-spacing:.18em;
+  margin-bottom:32px;
+  opacity:0; animation:fadeUp .5s .1s ease forwards;
+}
+.log-dot { width:5px; height:5px; border-radius:50%; background:var(--cyan); animation:blink 1.8s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.1} }
+
+/* Mascot */
+.mascot-stage {
+  position:relative; width:300px; height:300px;
+  margin:0 auto 36px;
+  opacity:0; animation:fadeUp .6s .05s ease forwards;
+}
+.mascot-stage img {
+  width:100%; height:100%; object-fit:contain;
+  filter:drop-shadow(0 0 50px rgba(153,69,255,.55));
+  animation:float 5s ease-in-out infinite;
+  position:relative; z-index:2;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+.ring {
+  position:absolute; border-radius:50%; border:1px solid;
+  top:50%; left:50%; transform:translate(-50%,-50%);
+  animation:ringpulse 3s ease-in-out infinite;
+}
+.ring-1 { width:120%; height:120%; border-color:rgba(153,69,255,.18); animation-delay:0s; }
+.ring-2 { width:145%; height:145%; border-color:rgba(0,229,255,.1); animation-delay:.8s; }
+.ring-3 { width:170%; height:170%; border-color:rgba(255,45,155,.06); animation-delay:1.6s; }
+@keyframes ringpulse { 0%,100%{opacity:.3;transform:translate(-50%,-50%) scale(1)} 50%{opacity:.8;transform:translate(-50%,-50%) scale(1.03)} }
+
+/* Story intro */
+.hero-story {
+  font-family:'Exo 2',sans-serif; font-weight:300; font-style:italic;
+  font-size:clamp(13px,1.6vw,16px); color:var(--muted);
+  max-width:500px; line-height:1.8; margin-bottom:24px;
+  opacity:0; animation:fadeUp .5s .18s ease forwards;
+}
+
+.hero-title {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(50px,10vw,118px);
+  font-weight:900; line-height:.88; letter-spacing:.04em;
+  margin-bottom:14px;
+  background:linear-gradient(140deg,#fff 0%,var(--cyan) 35%,var(--purple) 65%,var(--pink) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  opacity:0; animation:fadeUp .5s .26s ease forwards;
+}
+
+.hero-tagline {
+  display:flex; align-items:center; justify-content:center;
+  gap:14px; margin-bottom:28px;
+  opacity:0; animation:fadeUp .5s .32s ease forwards;
+}
+.htag { font-family:'Orbitron',sans-serif; font-size:13px; font-weight:600; letter-spacing:.1em; }
+.htag.e { color:var(--cyan); }
+.htag.p { color:var(--purple); }
+.htag.earn { color:var(--gold); }
+.htag.b { color:var(--pink); }
+.hdot { color:rgba(255,255,255,.18); font-size:8px; }
+
+.hero-sub {
+  font-size:clamp(14px,1.8vw,17px); font-weight:300;
+  color:var(--dim); max-width:460px; line-height:1.75;
+  margin:0 auto 40px;
+  opacity:0; animation:fadeUp .5s .38s ease forwards;
+}
+.hero-sub strong { color:var(--white); font-weight:500; }
+.hero-sub em { color:var(--cyan); font-style:normal; }
+
+.hero-ctas {
+  display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+  margin-bottom:52px;
+  opacity:0; animation:fadeUp .5s .44s ease forwards;
+}
+.btn-main {
+  font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700; letter-spacing:.1em;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff; border:none; padding:15px 32px; border-radius:7px;
+  cursor:pointer; text-decoration:none; display:inline-block;
+  box-shadow:0 0 24px rgba(153,69,255,.35);
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-main:hover { transform:translateY(-2px); box-shadow:0 6px 32px rgba(153,69,255,.55); }
+.btn-outline {
+  font-family:'Orbitron',sans-serif; font-size:12px; font-weight:600; letter-spacing:.1em;
+  background:transparent; color:var(--cyan);
+  border:1px solid rgba(0,229,255,.3); padding:14px 32px; border-radius:7px;
+  cursor:pointer; text-decoration:none; display:inline-block;
+  transition:border-color .15s,background .15s,box-shadow .15s;
+}
+.btn-outline:hover { border-color:var(--cyan); background:rgba(0,229,255,.06); box-shadow:0 0 16px rgba(0,229,255,.2); }
+.btn-ghost {
+  font-family:'Orbitron',sans-serif; font-size:12px; font-weight:500; letter-spacing:.08em;
+  background:transparent; color:var(--muted);
+  border:1px solid rgba(255,255,255,.1); padding:14px 28px; border-radius:7px;
+  cursor:pointer; text-decoration:none; display:inline-block;
+  transition:border-color .15s,color .15s;
+}
+.btn-ghost:hover { border-color:rgba(255,255,255,.25); color:var(--white); }
+
+/* Powered by */
+.hero-powered {
+  font-family:'Exo 2',sans-serif; font-size:12px; font-weight:300;
+  color:var(--muted); letter-spacing:.08em;
+  opacity:0; animation:fadeUp .5s .5s ease forwards;
+}
+.hero-powered strong {
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:13px;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── DIVIDER ── */
+.neon-line {
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--pink),transparent);
+  box-shadow:0 0 14px rgba(153,69,255,.4);
+  position:relative; z-index:1;
+}
+
+/* ── SECTION BASE ── */
+.section { max-width:1100px; margin:0 auto; padding:88px 24px; position:relative; z-index:1; }
+.s-eye {
+  font-family:'Orbitron',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.2em; color:var(--cyan); text-transform:uppercase;
+  margin-bottom:12px; display:block;
+}
+.s-eye::before { content:'// '; opacity:.4; }
+.s-title {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(28px,4vw,52px); font-weight:900;
+  letter-spacing:.02em; line-height:1.05; margin-bottom:14px;
+  background:linear-gradient(135deg,var(--white) 0%,rgba(240,238,255,.7) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.s-sub {
+  font-size:15px; font-weight:300; color:var(--dim);
+  max-width:500px; line-height:1.75; margin-bottom:52px;
+}
+
+/* ── MEET CAL-D ── */
+.cal-d-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center;
+}
+.cal-d-visual { position:relative; display:flex; align-items:center; justify-content:center; }
+.cal-d-visual img {
+  width:100%; max-width:400px;
+  filter:drop-shadow(0 0 70px rgba(153,69,255,.5));
+  animation:float 6s ease-in-out infinite;
+}
+.cal-d-traits {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:32px;
+}
+.cal-d-trait {
+  background:rgba(153,69,255,.06);
+  border:1px solid var(--border);
+  border-radius:8px; padding:12px 16px;
+  display:flex; align-items:center; gap:10px;
+}
+.trait-icon { font-size:18px; flex-shrink:0; }
+.trait-label { font-family:'Orbitron',sans-serif; font-size:11px; font-weight:600; color:var(--white); letter-spacing:.04em; }
+.trait-desc { font-size:11px; color:var(--muted); margin-top:2px; }
+.cal-d-lore {
+  font-size:15px; font-weight:300; color:var(--dim); line-height:1.8;
+  margin-bottom:16px;
+}
+.cal-d-lore strong { color:var(--white); font-weight:500; }
+.cal-d-lore em { color:var(--cyan); font-style:normal; }
+.cal-d-quote {
+  border-left:2px solid var(--purple);
+  padding:14px 20px;
+  background:rgba(153,69,255,.06);
+  border-radius:0 8px 8px 0;
+  margin:20px 0;
+}
+.cal-d-quote p {
+  font-family:'Exo 2',sans-serif; font-style:italic;
+  font-size:15px; color:var(--white); line-height:1.7;
+}
+.cal-d-quote span { font-size:12px; color:var(--muted); margin-top:6px; display:block; font-style:normal; }
+
+/* ── UNIVERSE (pillars) ── */
+.universe-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.pillar {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:16px; overflow:hidden;
+  text-decoration:none; display:flex; flex-direction:column;
+  transition:border-color .2s,transform .2s,box-shadow .2s;
+  cursor:pointer; position:relative;
+}
+.pillar:hover { transform:translateY(-4px); border-color:var(--pc); box-shadow:0 8px 32px rgba(0,0,0,.3),0 0 24px var(--pg); }
+.pillar:hover .pillar-svg { stroke:var(--pc); }
+.pillar:hover .pillar-foot { color:var(--pc); border-top-color:var(--pc); }
+
+.pillar[data-p="arena"]     { --pc:#FF2D9B; --pg:rgba(255,45,155,.12); }
+.pillar[data-p="library"]   { --pc:#9945FF; --pg:rgba(153,69,255,.12); }
+.pillar[data-p="community"] { --pc:#00E5FF; --pg:rgba(0,229,255,.12); }
+.pillar[data-p="signal"]    { --pc:#00FF9D; --pg:rgba(0,255,157,.12); }
+.pillar[data-p="market"]    { --pc:#FFB800; --pg:rgba(255,184,0,.12); }
+.pillar[data-p="kitchen"]   { --pc:#FF6B35; --pg:rgba(255,107,53,.12); }
+
+.pillar-soon { opacity:.55; }
+.pillar-soon .pillar-badge { display:inline-flex; }
+
+.pillar-img {
+  height:96px; display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+.pillar[data-p="arena"]     .pillar-img { background:linear-gradient(135deg,rgba(255,45,155,.12),rgba(255,45,155,.03)); }
+.pillar[data-p="library"]   .pillar-img { background:linear-gradient(135deg,rgba(153,69,255,.12),rgba(153,69,255,.03)); }
+.pillar[data-p="community"] .pillar-img { background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,229,255,.03)); }
+.pillar[data-p="signal"]    .pillar-img { background:linear-gradient(135deg,rgba(0,255,157,.12),rgba(0,255,157,.03)); }
+.pillar[data-p="market"]    .pillar-img { background:linear-gradient(135deg,rgba(255,184,0,.12),rgba(255,184,0,.03)); }
+.pillar[data-p="kitchen"]   .pillar-img { background:linear-gradient(135deg,rgba(255,107,53,.12),rgba(255,107,53,.03)); }
+
+.pillar-svg { width:38px;height:38px;fill:none;stroke:rgba(240,238,255,.28);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s; }
+.pillar-badge {
+  display:none; position:absolute; top:8px; right:8px;
+  font-family:'Orbitron',sans-serif; font-size:8px; font-weight:700; letter-spacing:.1em;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15);
+  border-radius:3px; padding:2px 8px; color:rgba(255,255,255,.5);
+}
+.pillar-body { padding:18px 20px 14px; flex:1; }
+.pillar-name {
+  font-family:'Orbitron',sans-serif; font-size:16px; font-weight:700; letter-spacing:.04em;
+  color:var(--white); margin-bottom:8px; line-height:1;
+}
+.pillar-desc { font-size:13px; font-weight:300; color:var(--dim); line-height:1.6; }
+.pillar-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+.ptag {
+  font-family:'Orbitron',sans-serif; font-size:8px; letter-spacing:.1em;
+  border:1px solid var(--pc); color:var(--pc); border-radius:3px;
+  padding:2px 8px; opacity:.55;
+}
+.pillar-foot {
+  padding:10px 20px; border-top:1px solid rgba(255,255,255,.06);
+  display:flex; justify-content:space-between;
+  font-family:'Orbitron',sans-serif; font-size:10px; letter-spacing:.1em;
+  color:rgba(240,238,255,.28);
+  transition:color .2s,border-top-color .2s;
+}
+
+/* ── STATS ── */
+.stats-row {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--border); border-radius:12px; overflow:hidden;
+  margin-bottom:0; position:relative; z-index:1;
+}
+.stat { background:var(--bg2); padding:28px 20px; text-align:center; border-right:1px solid var(--border); }
+.stat:last-child { border-right:none; }
+.stat-val {
+  font-family:'Orbitron',sans-serif; font-size:34px; font-weight:900; display:block; margin-bottom:6px;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.stat-lbl { font-size:11px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+
+/* ── FEATURES ── */
+.features-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.feat {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:12px; padding:24px 20px;
+  transition:border-color .2s,box-shadow .2s;
+}
+.feat:hover { border-color:var(--borderb); box-shadow:0 4px 24px rgba(153,69,255,.1); }
+.feat-icon { width:38px; height:38px; margin-bottom:14px; }
+.feat-icon svg { width:38px;height:38px;stroke:var(--purple);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round; }
+.feat-title { font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700; letter-spacing:.02em; color:var(--white); margin-bottom:8px; }
+.feat-desc { font-size:13px; font-weight:300; color:var(--dim); line-height:1.65; }
+
+/* ── TOKENOMICS ── */
+.token-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--border);
+  border:1px solid var(--border); border-radius:12px; overflow:hidden;
+  margin-bottom:20px;
+}
+.tstat { background:var(--bg2); padding:28px 20px; text-align:center; }
+.tstat-val {
+  font-family:'Orbitron',sans-serif; font-size:34px; font-weight:900; display:block; margin-bottom:6px;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.tstat-lbl { font-size:11px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+.ca-box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:10px; padding:22px 26px;
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+}
+.ca-l { flex:1; min-width:200px; }
+.ca-tag { font-family:'Orbitron',sans-serif; font-size:9px; color:var(--muted); letter-spacing:.12em; text-transform:uppercase; margin-bottom:8px; }
+.ca-val { font-family:'Orbitron',sans-serif; font-size:13px; color:var(--purple); letter-spacing:.06em; }
+.ca-net { margin-left:auto; display:flex; align-items:center; gap:8px; font-family:'Orbitron',sans-serif; font-size:11px; color:var(--purple); flex-shrink:0; }
+.ca-dot { width:7px;height:7px;border-radius:50%;background:var(--purple);animation:blink 2s infinite; }
+
+/* ── ROADMAP ── */
+.rm { display:flex; flex-direction:column; padding-left:48px; position:relative; }
+.rm::before { content:''; position:absolute; left:14px; top:16px; bottom:16px; width:1px; background:var(--border); }
+.rm-item { position:relative; padding:0 0 36px; }
+.rm-dot {
+  position:absolute; left:-34px; top:3px;
+  width:18px; height:18px; border-radius:50%;
+  border:1.5px solid var(--borderb); background:var(--bg);
+  display:flex; align-items:center; justify-content:center;
+}
+.rm-dot.done { background:var(--purple); border-color:var(--purple); box-shadow:0 0 10px rgba(153,69,255,.5); }
+.rm-dot.done::after { content:'✓'; font-size:9px; color:#fff; font-weight:700; }
+.rm-dot.now { border-color:var(--cyan); box-shadow:0 0 0 4px rgba(0,229,255,.1); }
+.rm-dot.now::after { content:''; width:6px;height:6px;border-radius:50%;background:var(--cyan); }
+.rm-phase { font-family:'Orbitron',sans-serif; font-size:10px; font-weight:600; letter-spacing:.14em; color:var(--cyan); margin-bottom:5px; text-transform:uppercase; }
+.rm-title { font-family:'Orbitron',sans-serif; font-size:18px; font-weight:700; letter-spacing:.02em; color:var(--white); margin-bottom:10px; }
+.rm-list { list-style:none; font-size:14px; font-weight:300; color:var(--dim); line-height:2; }
+.rm-list li::before { content:'— '; color:var(--purple); opacity:.55; }
+
+/* ── WHITEPAPER ── */
+.wp-box {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:12px; padding:34px 30px;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:24px; flex-wrap:wrap;
+  box-shadow:0 0 40px rgba(153,69,255,.07);
+}
+.wp-title { font-family:'Orbitron',sans-serif; font-size:22px; font-weight:700; letter-spacing:.02em; margin-bottom:8px; color:var(--white); }
+.wp-sub { font-size:14px; font-weight:300; color:var(--dim); }
+.wp-btn {
+  font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700; letter-spacing:.1em;
+  background:transparent; color:var(--purple);
+  border:1px solid rgba(153,69,255,.35);
+  padding:14px 26px; border-radius:7px;
+  text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+  transition:background .15s,box-shadow .15s; flex-shrink:0;
+}
+.wp-btn:hover { background:rgba(153,69,255,.08); box-shadow:0 0 16px rgba(153,69,255,.2); }
+
+/* ── FOOTER ── */
+.site-footer {
+  border-top:1px solid var(--border); padding:40px 24px;
+  max-width:1100px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:18px; position:relative; z-index:1;
+}
+.footer-brand {
+  font-family:'Orbitron',sans-serif; font-size:16px; font-weight:700;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  display:flex; align-items:center; gap:10px;
+}
+.footer-brand img { width:28px;height:28px;border-radius:50%;border:1px solid var(--borderb); }
+.footer-links { display:flex; gap:20px; list-style:none; }
+.footer-links a { font-size:12px; color:var(--muted); text-decoration:none; letter-spacing:.06em; transition:color .15s; }
+.footer-links a:hover { color:var(--cyan); }
+.footer-sol {
+  font-family:'Orbitron',sans-serif; font-size:10px; letter-spacing:.1em;
+  background:rgba(153,69,255,.08); border:1px solid rgba(153,69,255,.2);
+  border-radius:4px; padding:5px 12px; color:var(--purple);
+}
+.disclaimer {
+  max-width:1100px; margin:0 auto; padding:16px 24px 48px;
+  font-size:11px; color:rgba(240,238,255,.15); line-height:1.7;
+  border-top:1px solid var(--border); position:relative; z-index:1;
+}
+
+/* ── REVEAL ── */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity .6s ease,transform .6s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+
+/* ── $CAL-D UTILITY ── */
+.cal-d-utility {
+  margin-bottom: 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px 28px 24px;
+}
+.nu-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: .1em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 20px;
+}
+.nu-title::before { content: '// '; opacity: .4; }
+.nu-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+}
+.nu-item { display: flex; flex-direction: column; gap: 6px; }
+.nu-icon { font-size: 22px; }
+.nu-label {
+  font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+  color: var(--white); letter-spacing: .04em;
+}
+.nu-desc { font-size: 12px; font-weight: 300; color: var(--dim); line-height: 1.55; }
+
+/* ── LIVE TRANSMISSION (world alive) ── */
+.live-transmission {
+  position: fixed; bottom: 24px; right: 24px;
+  z-index: 800;
+  background: rgba(6,2,14,.92);
+  border: 1px solid rgba(153,69,255,.3);
+  border-radius: 10px;
+  padding: 12px 16px 12px 14px;
+  max-width: 280px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.5), 0 0 16px rgba(153,69,255,.1);
+  display: flex; align-items: flex-start; gap: 10px;
+  animation: transmissionIn .4s ease forwards;
+  cursor: pointer;
+  transition: opacity .3s;
+}
+.live-transmission.hiding { opacity: 0; pointer-events: none; }
+@keyframes transmissionIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.lt-avatar {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  object-fit: cover; border: 1.5px solid rgba(153,69,255,.4);
+}
+.lt-body { flex: 1; min-width: 0; }
+.lt-header { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.lt-name {
+  font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700;
+  color: var(--purple); letter-spacing: .06em;
+}
+.lt-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: blink 1.5s infinite; flex-shrink: 0; }
+.lt-msg { font-size: 12px; font-weight: 300; color: var(--dim); line-height: 1.5; }
+.lt-close {
+  position: absolute; top: 8px; right: 10px;
+  font-size: 14px; color: var(--muted); cursor: pointer; line-height: 1;
+  transition: color .15s;
+}
+.lt-close:hover { color: var(--white); }
+.lt-time { font-family: 'Orbitron', sans-serif; font-size: 9px; color: var(--muted); margin-top: 5px; letter-spacing: .08em; }
+
+/* ── PILLAR mystery ── */
+.pillar-mystery { cursor: default; }
+.pillar-mystery:hover { transform: none; box-shadow: none; border-color: var(--border) !important; }
+
+/* ── RESPONSIVE additions ── */
+@media (max-width: 768px) {
+  .nu-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .live-transmission { display: none; }
+}
+
+
+/* ── UNIVERSE STATUS BAR ── */
+.universe-status {
+  display: flex; align-items: center; gap: 0;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px; padding: 10px 20px;
+  margin-top: 28px; flex-wrap: wrap; justify-content: center;
+  gap: 4px;
+}
+.us-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 4px 14px;
+}
+.us-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+.us-green { background: var(--green); box-shadow: 0 0 6px var(--green); animation: blink 2s infinite; }
+.us-cyan  { background: var(--cyan);  box-shadow: 0 0 6px var(--cyan);  animation: blink 2.4s infinite .4s; }
+.us-gold  { background: var(--gold);  box-shadow: 0 0 6px var(--gold);  animation: blink 1.6s infinite .8s; }
+.us-label { font-family: "Exo 2", sans-serif; font-size: 11px; font-weight: 400; color: var(--muted); letter-spacing: .04em; }
+.us-val   { font-family: "Orbitron", sans-serif; font-size: 10px; font-weight: 600; color: var(--white); letter-spacing: .06em; }
+.us-sep   { width: 1px; height: 20px; background: rgba(255,255,255,.07); margin: 0 4px; flex-shrink: 0; }
+
+/* ── UNIVERSE SPLIT LABEL ── */
+.universe-split-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: "Orbitron", sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: .2em; color: var(--green);
+  margin-bottom: 10px;
+}
+.universe-split-label::before { content: "◉ "; font-size: 8px; }
+
+/* ── SOCIAL PROOF BAR ── */
+.proof-bar {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap; margin-bottom: 52px;
+}
+.proof-item { display: flex; align-items: center; gap: 10px; }
+.proof-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; animation: blink 2s infinite; }
+.proof-dot-g { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.proof-dot-c { background: var(--cyan);  box-shadow: 0 0 6px var(--cyan); animation-delay: .5s; }
+.proof-dot-p { background: var(--purple); box-shadow: 0 0 6px var(--purple); animation-delay: 1s; }
+.proof-label { font-family: "Exo 2", sans-serif; font-size: 12px; color: var(--muted); }
+.proof-val   { font-family: "Orbitron", sans-serif; font-size: 13px; font-weight: 700; color: var(--white); }
+
+/* ── LIVE LOG (explorer logs strip) ── */
+.explorer-log-strip {
+  background: rgba(0,255,157,.04);
+  border: 1px solid rgba(0,255,157,.1);
+  border-radius: 8px; padding: 14px 20px;
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-top: 48px;
+}
+.log-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.log-body { flex: 1; }
+.log-title { font-family: "Orbitron", sans-serif; font-size: 10px; font-weight: 700; color: var(--green); letter-spacing: .14em; margin-bottom: 6px; }
+.log-entries { display: flex; flex-direction: column; gap: 4px; }
+.log-entry { font-size: 12px; font-weight: 300; color: var(--dim); line-height: 1.5; }
+.log-entry span { font-family: "Orbitron", sans-serif; font-size: 9px; color: var(--muted); margin-right: 8px; }
+
+/* ── IMPROVED TRANSMISSION ── */
+.live-transmission {
+  display: none; /* hidden by default, JS shows it */
+}
+
+@media (max-width: 768px) {
+  .universe-status { display: none; }
+  .proof-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .us-item { padding: 4px 8px; }
+}
+
+
+/* ── HERO WHY ── */
+.hero-why {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; flex-wrap: wrap;
+  margin-bottom: 24px;
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px;
+  padding: 14px 24px;
+  max-width: 460px; margin: 0 auto;
+}
+.hw-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 16px;
+  font-size: 15px; font-weight: 300; color: var(--dim);
+}
+.hw-item strong { color: var(--white); font-weight: 500; }
+.hw-icon { font-size: 16px; }
+.hw-sep { width: 1px; height: 22px; background: rgba(255,255,255,.08); }
+
+/* ── TELEGRAM PORTAL ── */
+.tg-portal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  position: relative; overflow: hidden;
+  padding: 0;
+}
+.tg-glow {
+  position: absolute; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,229,255,.06), transparent 65%);
+  top: -100px; right: -100px; pointer-events: none; border-radius: 50%;
+}
+.tg-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; align-items: center;
+}
+.tg-left { padding: 56px 48px; position: relative; z-index: 1; }
+.tg-eye {
+  font-family: "Orbitron", sans-serif; font-size: 10px; font-weight: 700;
+  letter-spacing: .2em; color: var(--cyan); margin-bottom: 14px;
+}
+.tg-eye::before { content: "// "; opacity: .4; }
+.tg-title {
+  font-family: "Orbitron", sans-serif; font-size: clamp(24px,3.5vw,40px);
+  font-weight: 900; line-height: 1.1; letter-spacing: .02em;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, var(--white) 0%, rgba(240,238,255,.7) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.tg-sub {
+  font-size: 14px; font-weight: 300; color: var(--dim); line-height: 1.75;
+  max-width: 380px;
+}
+.tg-btn {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 28px;
+  font-family: "Orbitron", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  color: #fff; text-decoration: none;
+  padding: 15px 32px; border-radius: 8px;
+  box-shadow: 0 0 28px rgba(0,229,255,.2);
+  transition: transform .15s, box-shadow .15s;
+}
+.tg-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 32px rgba(0,229,255,.35); }
+.tg-btn-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: blink 1.5s infinite; }
+.tg-note { font-size: 11px; color: var(--muted); margin-top: 12px; letter-spacing: .04em; }
+
+/* Chat window */
+.tg-right {
+  border-left: 1px solid var(--border);
+  height: 100%; min-height: 340px;
+  position: relative; z-index: 1;
+}
+.tg-window { display: flex; flex-direction: column; height: 100%; }
+.tg-win-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.02);
+}
+.tg-win-dots { display: flex; gap: 5px; }
+.tg-win-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,.12);
+}
+.tg-win-title { font-family: "Orbitron", sans-serif; font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .06em; flex: 1; }
+.tg-win-status { display: flex; align-items: center; gap: 5px; font-family: "Orbitron", sans-serif; font-size: 9px; color: var(--green); letter-spacing: .08em; }
+.tg-messages { flex: 1; padding: 20px; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+.tg-msg { display: flex; gap: 10px; align-items: flex-start; }
+.tg-msg-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: rgba(153,69,255,.15); border: 1px solid rgba(153,69,255,.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+.tg-anon  { background: rgba(0,229,255,.12); border-color: rgba(0,229,255,.2); color: var(--cyan); font-family: "Orbitron", sans-serif; font-size: 10px; font-weight: 700; }
+.tg-anon2 { background: rgba(255,45,155,.1); border-color: rgba(255,45,155,.2); color: var(--pink); font-family: "Orbitron", sans-serif; font-size: 10px; font-weight: 700; }
+.tg-msg-bubble { flex: 1; }
+.tg-msg-name { font-family: "Orbitron", sans-serif; font-size: 10px; font-weight: 600; color: var(--purple); margin-bottom: 4px; letter-spacing: .04em; }
+.tg-msg-cal-d .tg-msg-name { color: var(--cyan); }
+.tg-msg-text { font-size: 13px; font-weight: 300; color: var(--dim); line-height: 1.5; }
+.tg-typing {
+  display: flex; align-items: center; gap: 5px;
+  padding-left: 40px;
+}
+.tg-typing span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted); animation: typingdot 1.2s ease-in-out infinite;
+}
+.tg-typing span:nth-child(2) { animation-delay: .2s; }
+.tg-typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes typingdot { 0%,60%,100%{transform:translateY(0);opacity:.3} 30%{transform:translateY(-4px);opacity:1} }
+.tg-typing-label { font-size: 11px; color: var(--muted); font-style: italic; }
+
+@media (max-width: 768px) {
+  .tg-inner { grid-template-columns: 1fr; }
+  .tg-right { display: none; }
+  .tg-left { padding: 36px 28px; }
+  .hero-why { flex-direction: column; gap: 4px; }
+  .hw-sep { width: 40px; height: 1px; }
+  .nu-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 480px) {
+  .tg-left { padding: 28px 20px; }
+  .tg-btn { width: 100%; justify-content: center; }
+}
+
+
+
+/* ── BUILDER NOTE ── */
+.builder-note {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: "Exo 2", sans-serif; font-size: 12px; font-weight: 300;
+  color: var(--muted); letter-spacing: .04em;
+  margin-bottom: 20px;
+  padding: 8px 14px;
+  border-left: 2px solid rgba(153,69,255,.3);
+  background: rgba(153,69,255,.04);
+  border-radius: 0 6px 6px 0;
+}
+.builder-note::before { content: "◉ "; color: var(--purple); font-size: 9px; }
+
+/* ── FEED LABEL: subtler ── */
+.feed-label {
+  font-family: "Orbitron", sans-serif; font-size: 9px; font-weight: 700;
+  letter-spacing: .16em; color: rgba(153,69,255,.5);
+  padding: 0 14px; flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+/* ── SECTION title gradient: slightly warmer ── */
+.s-title {
+  background: linear-gradient(130deg, #fff 0%, rgba(240,238,255,.65) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* ── Pillar hover: border stays solid on mystery card ── */
+.pillar-mystery:hover { border-color: rgba(153,69,255,.14) !important; }
+
+/* ── TG window dots: brand colors ── */
+.tg-win-dots span:nth-child(1) { background: rgba(255,45,155,.4); }
+.tg-win-dots span:nth-child(2) { background: rgba(255,184,0,.4); }
+.tg-win-dots span:nth-child(3) { background: rgba(0,229,255,.4); }
+
+/* ── CTA buttons: slightly tighter letter-spacing on long labels ── */
+.btn-main   { letter-spacing: .08em; }
+.btn-outline { letter-spacing: .08em; }
+.tg-btn     { letter-spacing: .08em; }
+
+/* ── Roadmap line: subtle glow ── */
+.rm::before { box-shadow: 0 0 8px rgba(153,69,255,.1); }
+
+/* ── Proof bar: equal column widths ── */
+.proof-bar { justify-content: center; gap: 32px; }
+.proof-item { gap: 8px; }
+.proof-label { font-size: 11px; }
+.proof-val { font-size: 12px; }
+
+/* ── Mobile: hero-why stacked ── */
+@media (max-width: 480px) {
+  .hw-sep { display: none; }
+  .hw-item { justify-content: center; font-size: 14px; }
+  .hero-why { padding: 12px 16px; gap: 8px; }
+  .builder-note { font-size: 11px; }
+}
+
+
+/* Footer X button */
+.footer-x-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: "Exo 2", sans-serif; font-size: 12px; font-weight: 400;
+  color: var(--muted); text-decoration: none; letter-spacing: .04em;
+  padding: 7px 14px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 6px;
+  transition: color .15s, border-color .15s;
+}
+.footer-x-btn:hover { color: var(--white); border-color: rgba(255,255,255,.2); }
+
+.footer-x-follow { }
+
+/* TG X link */
+.tg-x-link {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 10px;
+  font-family: "Exo 2", sans-serif; font-size: 12px; font-weight: 400;
+  color: var(--muted); text-decoration: none; letter-spacing: .04em;
+  transition: color .15s;
+}
+.tg-x-link:hover { color: var(--white); }
+.tg-x-link svg { opacity: .6; }
+
+/* Section pacing — slightly more breathing room */
+.section { padding: 96px 24px; }
+.section + .section { padding-top: 0; }
+
+/* Hover state on nav links — more responsive */
+.nav-menu a { transition: color .12s, background .12s; }
+
+/* Pillar hover — smoother */
+.pillar { transition: border-color .18s, transform .18s, box-shadow .22s; }
+
+/* Feat card — consistent spacing */
+.feat { padding: 26px 22px; }
+.feat-icon { margin-bottom: 16px; }
+
+/* RM items — slightly more breathing */
+.rm-list li { padding-left: 2px; }
+
+/* Section eyebrow — consistent spacing */
+.s-eye { margin-bottom: 14px; }
+
+/* Whitepaper box — cleaner */
+.wp-box { padding: 36px 32px; }
+
+/* CA box border improvement */
+.ca-box { border-left: 2px solid var(--border); }
+
+/* Stats row font size bump on mobile */
+@media (max-width: 480px) {
+  .us-label { font-size: 10px; }
+  .us-val   { font-size: 9px; }
+  .us-item  { padding: 4px 10px; }
+  .footer-x-follow { order: -1; }
+  .tg-btn { font-size: 11px; padding: 13px 24px; }
+}
+
+/* Smooth scroll anchor offset */
+#meet-cal-d, #universe, #why, #tokenomics, #roadmap, #whitepaper, #explorer-portal {
+  scroll-margin-top: 76px;
+}
+
+/* Cursor: crosshair only on interactive elements, default elsewhere */
+a, button { cursor: pointer; }
+body { cursor: default; }
+
+/* ── RESPONSIVE ── */
+@media (max-width:768px) {
+  nav { padding:0 16px; height:54px; }
+  .nav-menu,.nav-cta { display:none; }
+  #burger { display:flex; }
+  .explorer-feed { margin-top:54px; }
+  .hero { padding:90px 20px 50px; }
+  .mascot-stage { width:230px;height:230px; }
+  .hero-title { font-size:clamp(44px,13vw,78px); }
+  .universe-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .cal-d-grid { grid-template-columns:1fr; gap:32px; }
+  .cal-d-visual img { max-width:260px; }
+  .cal-d-traits { grid-template-columns:1fr 1fr; }
+  .features-grid { grid-template-columns:1fr 1fr; gap:10px; }
+  .token-grid { grid-template-columns:repeat(2,1fr); }
+  .stats-row { grid-template-columns:repeat(2,1fr); }
+  .stat { border-right:1px solid var(--border); border-bottom:1px solid var(--border); }
+  .stat:nth-child(2n) { border-right:none; }
+  .stat:nth-last-child(-n+2) { border-bottom:none; }
+  .section { padding:60px 20px; }
+  .ca-box { flex-direction:column; gap:12px; }
+  .ca-net { margin-left:0; }
+  .site-footer { flex-direction:column; align-items:flex-start; }
+  .wp-box { flex-direction:column; }
+  .wp-btn { width:100%; text-align:center; justify-content:center; }
+}
+@media (max-width:480px) {
+  .hero-title { font-size:46px; }
+  .hero-ctas { flex-direction:column; align-items:center; }
+  .btn-main,.btn-outline,.btn-ghost { width:100%;max-width:290px;text-align:center; }
+  .universe-grid { grid-template-columns:1fr 1fr; gap:8px; }
+  .pillar-img { height:78px; }
+  .features-grid { grid-template-columns:1fr; }
+  .cal-d-traits { grid-template-columns:1fr; }
+  .s-title { font-size:26px; }
+  .tstat-val,.stat-val { font-size:28px; }
+  .hero-tagline { gap:8px; }
+  .htag { font-size:11px; }
+}
+</style>
+</head>
+<body>
+
+<!-- AMBIENT -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="3580.png" alt="CAL-D" onerror="this.style.display='none'">
+    <span class="nav-logo-name">CALDRISIA</span>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="#meet-cal-d">Meet CAL-D</a></li>
+    <li><a href="#universe">Universe</a></li>
+    <li><a href="#tokenomics">Token</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#whitepaper">Whitepaper</a></li>
+    <li><a href="#explorer-portal" style="color:var(--cyan)!important;">Portal ◎</a></li>
+  </ul>
+  <a href="https://t.me/caldrisia" target="_blank" class="nav-cta">JOIN EXPLORERS</a>
+  <button id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div id="drawer">
+  <a href="#meet-cal-d">Meet CAL-D</a>
+  <a href="#universe">Universe</a>
+  <a href="#tokenomics">Token</a>
+  <a href="#roadmap">Roadmap</a>
+  <a href="#whitepaper">Whitepaper</a>
+  <a href="#explorer-portal" style="color:var(--cyan)">Enter the Portal ◎</a>
+  <a href="https://x.com/caldrisia" target="_blank">Twitter / X</a>
+  <a href="https://t.me/caldrisia" target="_blank">Telegram</a>
+</div>
+<div id="dimmer"></div>
+
+<!-- EXPLORER FEED -->
+<div class="explorer-feed">
+  <div class="feed-label">CAL-D ·</div>
+  <div class="feed-inner">
+    <span class="feed-item bright">🌌 Explorer Log #008 — Universe online</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🤖 CAL-D is active</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item gold">🎮 Arena charging…</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">📚 Library expanding</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item bright">☀️ gm, Explorers</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🛰 Signal strong from outer sectors</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item pink">✨ $CAL-D — Solana · coming soon</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🌍 Community portal: open</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item gold">🔭 New coordinates loading…</span>
+    <span class="feed-sep">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="feed-item bright">🌌 Explorer Log #008 — Universe online</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🤖 CAL-D is active</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item gold">🎮 Arena charging…</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">📚 Library expanding</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item bright">☀️ gm, Explorers</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🛰 Signal strong from outer sectors</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item pink">✨ $CAL-D — Solana · coming soon</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🌍 Community portal: open</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item gold">🔭 New coordinates loading…</span>
+    <span class="feed-sep">·</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-log"><div class="log-dot"></div>Signal Detected · Incoming Transmission</div>
+
+  <div class="mascot-stage">
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <img src="3580.png" alt="CAL-D — the explorer robot">
+  </div>
+
+  <p class="hero-story">
+    Somewhere between the stars, CAL-D found a portal nobody else had noticed.<br>
+    On the other side — a universe that grows every time an Explorer arrives.
+  </p>
+
+  <h1 class="hero-title">CALDRISIA</h1>
+
+  <div class="hero-tagline">
+    <span class="htag e">EXPLORE</span>
+    <span class="hdot">●</span>
+    <span class="htag p">PLAY</span>
+    <span class="hdot">●</span>
+    <span class="htag earn">EARN</span>
+    <span class="hdot">●</span>
+    <span class="htag b">BELONG</span>
+  </div>
+
+  <div class="hero-why">
+    <div class="hw-item"><span class="hw-icon">🌌</span><span>A place to <strong>explore</strong></span></div>
+    <div class="hw-sep"></div>
+    <div class="hw-item"><span class="hw-icon">🎮</span><span>A place to <strong>play</strong></span></div>
+    <div class="hw-sep"></div>
+    <div class="hw-item"><span class="hw-icon">🤝</span><span>A place to <strong>belong</strong></span></div>
+  </div>
+  <p class="hero-sub" style="margin-top:20px;">
+    Built by Explorers, for Explorers.<br>
+    <strong>The adventure starts the moment you arrive.</strong>
+  </p>
+
+  <div class="hero-ctas">
+    <a href="https://t.me/caldrisia" target="_blank" class="btn-main">JOIN THE EXPLORERS</a>
+    <a href="#meet-cal-d" class="btn-outline">MEET CAL-D</a>
+    <a href="#universe" class="btn-ghost">EXPLORE THE UNIVERSE</a>
+  </div>
+
+  <p class="hero-powered">Powered by <strong>$CAL-D</strong> on Solana ◎</p>
+
+  <!-- UNIVERSE STATUS -->
+  <div class="universe-status reveal" style="animation-delay:.56s;opacity:0;animation:fadeUp .5s .56s ease forwards;">
+    <div class="us-item">
+      <div class="us-dot us-green"></div>
+      <span class="us-label">Universe</span>
+      <span class="us-val">Online</span>
+    </div>
+    <div class="us-sep"></div>
+    <div class="us-item">
+      <div class="us-dot us-green"></div>
+      <span class="us-label">CAL-D</span>
+      <span class="us-val">Active</span>
+    </div>
+    <div class="us-sep"></div>
+    <div class="us-item">
+      <div class="us-dot us-cyan"></div>
+      <span class="us-label">Explorer Portal</span>
+      <span class="us-val">Open</span>
+    </div>
+    <div class="us-sep"></div>
+    <div class="us-item">
+      <div class="us-dot us-gold" id="arena-dot"></div>
+      <span class="us-label">Arena</span>
+      <span class="us-val" id="arena-status">Charging…</span>
+    </div>
+  </div>
+</section>
+
+<div class="neon-line"></div>
+
+<!-- STATS -->
+<div style="max-width:1100px;margin:0 auto;padding:40px 24px 0;position:relative;z-index:1;">
+  <div class="stats-row reveal">
+    <div class="stat"><span class="stat-val">1B</span><div class="stat-lbl">Total Supply</div></div>
+    <div class="stat"><span class="stat-val">0%</span><div class="stat-lbl">Team Tokens</div></div>
+    <div class="stat"><span class="stat-val">SOL</span><div class="stat-lbl">Blockchain</div></div>
+    <div class="stat"><span class="stat-val">SOON™</span><div class="stat-lbl">Launch Date</div></div>
+  </div>
+</div>
+
+<!-- MEET CAL-D -->
+<section class="section" id="meet-cal-d">
+  <span class="s-eye">01 — The Character</span>
+  <div class="cal-d-grid">
+    <div>
+      <h2 class="s-title reveal">Meet CAL-D 🤖</h2>
+      <div class="builder-note reveal">Caldrisia is community-built and evolving over time.</div>
+      <p class="cal-d-lore reveal">
+        Deep in an unknown corner of the digital cosmos, a <strong>tiny explorer robot</strong> stumbled upon a mysterious glowing portal. Without hesitation — because that's just who CAL-D is — he stepped through.
+      </p>
+      <p class="cal-d-lore reveal">
+        What he found on the other side was <em>Caldrisia</em>: a living universe of games, stories, community and discovery. And he's been exploring ever since, inviting anyone curious enough to follow.
+      </p>
+      <div class="cal-d-quote reveal">
+        <p>"Every explorer who arrives makes the universe a little bigger."</p>
+        <span>— CAL-D, Explorer Log #001</span>
+      </div>
+      <div class="cal-d-traits reveal">
+        <div class="cal-d-trait"><div class="trait-icon">🔭</div><div><div class="trait-label">Curious</div><div class="trait-desc">Always exploring</div></div></div>
+        <div class="cal-d-trait"><div class="trait-icon">✨</div><div><div class="trait-label">Optimistic</div><div class="trait-desc">Sees possibility</div></div></div>
+        <div class="cal-d-trait"><div class="trait-icon">🤝</div><div><div class="trait-label">Community-first</div><div class="trait-desc">Guides explorers</div></div></div>
+        <div class="cal-d-trait"><div class="trait-icon">🎮</div><div><div class="trait-label">Playful</div><div class="trait-desc">Slightly goofy</div></div></div>
+      </div>
+    </div>
+
+    <!-- EXPLORER LOG STRIP -->
+    <div class="explorer-log-strip reveal">
+      <div class="log-icon">🛰</div>
+      <div class="log-body">
+        <div class="log-title">CAL-D — RECENT TRANSMISSIONS</div>
+        <div class="log-entries" id="explorer-logs">
+          <div class="log-entry"><span>#003</span>Detected unusual portal energy near the outer sectors…</div>
+          <div class="log-entry"><span>#002</span>Community portal fully operational. Explorers arriving.</div>
+          <div class="log-entry"><span>#001</span>Universe initialization complete. The adventure begins.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cal-d-visual reveal">
+      <img src="3580.png" alt="CAL-D the explorer robot">
+    </div>
+  </div>
+</section>
+
+<!-- UNIVERSE -->
+<section class="section" id="universe" style="padding-top:0;">
+  <!-- SOCIAL PROOF / LIFE SIGNALS -->
+  <div class="proof-bar reveal">
+    <div class="proof-item">
+      <div class="proof-dot proof-dot-g"></div>
+      <div>
+        <div class="proof-label">Universe Status</div>
+        <div class="proof-val">Online & Active</div>
+      </div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-dot proof-dot-c"></div>
+      <div>
+        <div class="proof-label">Explorer Signals</div>
+        <div class="proof-val">Active</div>
+      </div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-dot proof-dot-p"></div>
+      <div>
+        <div class="proof-label">Community</div>
+        <div class="proof-val">Growing</div>
+      </div>
+    </div>
+    <div class="proof-item">
+      <div class="proof-dot proof-dot-g"></div>
+      <div>
+        <div class="proof-label">Portal Activity</div>
+        <div class="proof-val">Live</div>
+      </div>
+    </div>
+  </div>
+
+  <span class="s-eye">02 — The Universe</span>
+  <div class="universe-split-label reveal">CORE UNIVERSE</div>
+  <h2 class="s-title reveal">Active Portals</h2>
+  <p class="s-sub reveal">These worlds are alive right now. CAL-D is still exploring — more portals appear as the universe grows.</p>
+
+  <div class="universe-grid">
+
+    <a href="https://t.me/caldrisia" target="_blank" class="pillar reveal" data-p="community">
+      <div class="pillar-img">
+        <svg class="pillar-svg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-name">Community</div>
+        <div class="pillar-desc">The heart of Caldrisia. Connect with Explorers, join missions and help shape the universe.</div>
+        <div class="pillar-tags"><span class="ptag">EVENTS</span><span class="ptag">MISSIONS</span><span class="ptag">TOGETHER</span></div>
+      </div>
+      <div class="pillar-foot"><span>ENTER</span><span>↗</span></div>
+    </a>
+
+    <a href="cal-d-library.html" class="pillar pillar-soon reveal" data-p="library">
+      <div class="pillar-img">
+        <div class="pillar-badge">UNDISCOVERED</div>
+        <svg class="pillar-svg" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-name">Library</div>
+        <div class="pillar-desc">Stories, lore and knowledge. The archive of the Caldrisia universe — CAL-D hasn't uncovered this part of it yet.</div>
+        <div class="pillar-tags"><span class="ptag">LORE</span><span class="ptag">STORIES</span><span class="ptag">KNOWLEDGE</span></div>
+      </div>
+      <div class="pillar-foot"><span>NOT YET DISCOVERED</span><span>🔭</span></div>
+    </a>
+
+    <a href="cal-d-arena.html" class="pillar pillar-soon reveal" data-p="arena">
+      <div class="pillar-img">
+        <div class="pillar-badge">UNDISCOVERED</div>
+        <svg class="pillar-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-name">Game Arena</div>
+        <div class="pillar-desc">Compete, progress and unlock Explorer achievements. CAL-D hasn't found the way in yet — this part of the universe remains undiscovered.</div>
+        <div class="pillar-tags"><span class="ptag">BATTLE</span><span class="ptag">QUEST</span><span class="ptag">COMPETE</span></div>
+      </div>
+      <div class="pillar-foot"><span>NOT YET DISCOVERED</span><span>🔭</span></div>
+    </a>
+
+    <a href="cal-d-signals.html" class="pillar pillar-soon reveal" data-p="signal">
+      <div class="pillar-img">
+        <div class="pillar-badge">UNDISCOVERED</div>
+        <svg class="pillar-svg" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-name">Crypto Signals</div>
+        <div class="pillar-desc">Market insights, crypto education and explorer intelligence. CAL-D senses this portal nearby — but it hasn't been discovered yet.</div>
+        <div class="pillar-tags"><span class="ptag">LIVE</span><span class="ptag">ANALYSIS</span><span class="ptag">ALPHA</span></div>
+      </div>
+      <div class="pillar-foot"><span>NOT YET DISCOVERED</span><span>🔭</span></div>
+    </a>
+
+    <div class="pillar pillar-soon reveal pillar-mystery" data-p="mystery">
+      <div class="pillar-img" style="background:linear-gradient(135deg,rgba(153,69,255,.08),rgba(255,45,155,.05));">
+        <svg class="pillar-svg" viewBox="0 0 24 24" style="opacity:.4;"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-name" style="background:linear-gradient(90deg,rgba(153,69,255,.7),rgba(255,45,155,.7));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Uncharted</div>
+        <div class="pillar-desc">CAL-D's signal is picking up something… but the coordinates aren't clear yet. The universe keeps expanding.</div>
+        <div class="pillar-tags"><span class="ptag" style="border-color:rgba(153,69,255,.4);color:rgba(153,69,255,.6)">UNKNOWN</span><span class="ptag" style="border-color:rgba(153,69,255,.4);color:rgba(153,69,255,.6)">DISCOVERY</span></div>
+      </div>
+      <div class="pillar-foot" style="font-style:italic;opacity:.4;"><span>Being discovered...</span><span>🔭</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY CALDRISIA -->
+<section class="section" id="why" style="padding-top:0;">
+  <span class="s-eye">03 — Why Join</span>
+  <h2 class="s-title reveal">A Universe.<br>Not a Token.</h2>
+  <p class="s-sub reveal">Every Explorer helps shape what Caldrisia becomes. This isn't about flipping — it's about building something together.</p>
+  <div class="features-grid">
+    <div class="feat reveal">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      <div class="feat-title">Fair Launch</div>
+      <div class="feat-desc">No pre-sale, no team allocation, no insider advantages. Every Explorer starts equal.</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="feat-title">Explorer-Driven</div>
+      <div class="feat-desc">Every decision shaped by the community. Explorers vote, build and guide the direction of the universe.</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg></div>
+      <div class="feat-title">Living Universe</div>
+      <div class="feat-desc">Not a static token page. Caldrisia grows, evolves and expands — new worlds are always opening.</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg></div>
+      <div class="feat-title">Real Utility</div>
+      <div class="feat-desc">$CAL-D powers experiences across the entire universe — from Arena rewards to community missions.</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></div>
+      <div class="feat-title">Explorer Rewards</div>
+      <div class="feat-desc">Active Explorers earn the most. Giveaways, tournament prizes and explorer-only rewards.</div>
+    </div>
+    <div class="feat reveal">
+      <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg></div>
+      <div class="feat-title">Built on Solana</div>
+      <div class="feat-desc">Lightning-fast, near-zero fees. Solana is the engine that powers the Caldrisia universe.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOKENOMICS -->
+<section class="section" id="tokenomics" style="padding-top:0;">
+  <span class="s-eye">04 — The Token</span>
+  <h2 class="s-title reveal">$CAL-D</h2>
+  <p class="s-sub reveal">The fuel of the Caldrisia universe. Fair launch — no pre-sale, no insider advantages. Every Explorer starts on equal ground.</p>
+  <div class="token-grid reveal">
+    <div class="tstat"><span class="tstat-val">1B</span><div class="tstat-lbl">Total Supply</div></div>
+    <div class="tstat"><span class="tstat-val">0%</span><div class="tstat-lbl">Team Allocation</div></div>
+    <div class="tstat"><span class="tstat-val">SOL</span><div class="tstat-lbl">Blockchain</div></div>
+    <div class="tstat"><span class="tstat-val">FAIR</span><div class="tstat-lbl">Launch Type</div></div>
+  </div>
+  <!-- $CAL-D utility -->
+  <div class="cal-d-utility reveal">
+    <div class="nu-title">Why $CAL-D matters</div>
+    <div class="nu-grid">
+      <div class="nu-item">
+        <div class="nu-icon">🎮</div>
+        <div class="nu-label">Play</div>
+        <div class="nu-desc">Unlock Arena experiences, enter tournaments and earn rewards.</div>
+      </div>
+      <div class="nu-item">
+        <div class="nu-icon">🌍</div>
+        <div class="nu-label">Belong</div>
+        <div class="nu-desc">Be part of the Explorer ecosystem. Shape the universe with your voice.</div>
+      </div>
+      <div class="nu-item">
+        <div class="nu-icon">📚</div>
+        <div class="nu-label">Explore</div>
+        <div class="nu-desc">Discover new worlds and access experiences as portals unlock across the universe.</div>
+      </div>
+      <div class="nu-item">
+        <div class="nu-icon">✨</div>
+        <div class="nu-label">Build</div>
+        <div class="nu-desc">Shape where the universe goes next — every Explorer's voice matters.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ca-box reveal">
+    <div class="ca-l">
+      <div class="ca-tag">Contract Address</div>
+      <div class="ca-val">⏳ Launching Soon — Contract TBA</div>
+    </div>
+    <div class="ca-net"><div class="ca-dot"></div>Solana ◎</div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="section" id="roadmap" style="padding-top:0;">
+  <span class="s-eye">05 — Roadmap</span>
+  <h2 class="s-title reveal">The Journey<br>Ahead</h2>
+  <p class="s-sub reveal">Building a universe takes time. Here's where we're headed — phase by phase.</p>
+  <div class="rm">
+    <div class="rm-item reveal">
+      <div class="rm-dot done"></div>
+      <div class="rm-phase">Phase 1 — First Contact</div>
+      <div class="rm-title">The Portal Opens</div>
+      <ul class="rm-list">
+        <li>$CAL-D launches — the universe comes online</li>
+        <li>CAL-D character and world design finalized</li>
+        <li>Website, whitepaper and Explorer identity established</li>
+        <li>First Explorers arrive and the community forms</li>
+      </ul>
+    </div>
+    <div class="rm-item reveal">
+      <div class="rm-dot now"></div>
+      <div class="rm-phase">Phase 2 — Growing</div>
+      <div class="rm-title">The Community Grows</div>
+      <ul class="rm-list">
+        <li>Explorer community deepens and activates</li>
+        <li>Regular giveaways, contests and explorer events</li>
+        <li>Raydium listing — $CAL-D reaches the open market</li>
+        <li>Library expands with new lore and stories</li>
+      </ul>
+    </div>
+    <div class="rm-item reveal">
+      <div class="rm-dot"></div>
+      <div class="rm-phase">Phase 3 — Interactive Systems</div>
+      <div class="rm-title">The Universe Activates</div>
+      <ul class="rm-list">
+        <li>Game Arena opens — Explorers compete and earn $CAL-D</li>
+        <li>New interactive systems begin to emerge</li>
+        <li>Explorer community shapes the direction through voting</li>
+        <li>First Caldrisia universe events and experiences</li>
+      </ul>
+    </div>
+    <div class="rm-item reveal">
+      <div class="rm-dot"></div>
+      <div class="rm-phase">Phase 4 — Natural Evolution</div>
+      <div class="rm-title">No Ceiling</div>
+      <ul class="rm-list">
+        <li>Community governance matures — Explorers lead</li>
+        <li>New portals unlock as the universe grows naturally</li>
+        <li>Solana ecosystem connections deepen</li>
+        <li>CAL-D explorer identity evolves with the community</li>
+        <li>The universe has no final form — always expanding</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- WHITEPAPER -->
+<section class="section" id="whitepaper" style="padding-top:0;">
+  <span class="s-eye">06 — Explorer's Guide</span>
+  <h2 class="s-title reveal">The Explorer's<br>Handbook</h2>
+  <div class="wp-box reveal">
+    <div>
+      <div class="wp-title">Caldrisia — Explorer's Handbook</div>
+      <div class="wp-sub">The complete Caldrisia universe guide — vision, tokenomics, roadmap and everything an Explorer needs before stepping through the portal.</div>
+    </div>
+    <a href="Caldrisia_Whitepaper_EN.pdf" target="_blank" class="wp-btn">⬇ Read the Explorer's Handbook</a>
+  </div>
+</section>
+
+<!-- EXPLORER PORTAL / TELEGRAM -->
+<section class="section" id="explorer-portal" style="padding-top:0; padding-bottom: 80px;">
+  <div class="tg-portal reveal">
+    <div class="tg-glow"></div>
+    <div class="tg-inner">
+      <div class="tg-left">
+        <div class="tg-eye">EXPLORER PORTAL</div>
+        <h2 class="tg-title">CAL-D is inside.<br>Are you?</h2>
+        <p class="tg-sub">
+          Right now, Explorers are connecting, sharing discoveries and shaping the universe — together, inside the Telegram portal.
+        </p>
+        <p class="tg-sub" style="margin-top:8px;">
+          This is where the world comes alive between updates.
+        </p>
+        <a href="https://t.me/caldrisia" target="_blank" class="tg-btn">
+          <span class="tg-btn-dot"></span>
+          ENTER THE PORTAL
+        </a>
+        <div class="tg-note">Free to join. Just bring your curiosity.</div>
+        <a href="https://x.com/caldrisia" target="_blank" class="tg-x-link">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.259 5.629L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Follow CAL-D transmissions on X
+        </a>
+      </div>
+      <div class="tg-right">
+        <div class="tg-window">
+          <div class="tg-win-bar">
+            <div class="tg-win-dots"><span></span><span></span><span></span></div>
+            <div class="tg-win-title">Caldrisia Explorer Portal</div>
+            <div class="tg-win-status"><div class="us-dot us-green" style="width:6px;height:6px;"></div> Live</div>
+          </div>
+          <div class="tg-messages" id="tg-messages">
+            <div class="tg-msg tg-msg-cal-d">
+              <div class="tg-msg-avatar">🤖</div>
+              <div class="tg-msg-bubble">
+                <div class="tg-msg-name">CAL-D</div>
+                <div class="tg-msg-text">gm 🌌</div>
+              </div>
+            </div>
+            <div class="tg-msg">
+              <div class="tg-msg-avatar tg-anon">E</div>
+              <div class="tg-msg-bubble">
+                <div class="tg-msg-name">Explorer_77</div>
+                <div class="tg-msg-text">just found the lore section 👀 this goes deep</div>
+              </div>
+            </div>
+            <div class="tg-msg">
+              <div class="tg-msg-avatar tg-anon2">X</div>
+              <div class="tg-msg-bubble">
+                <div class="tg-msg-name">xplorer_nova</div>
+                <div class="tg-msg-text">anyone else hyped for arena? 🎮</div>
+              </div>
+            </div>
+            <div class="tg-msg tg-msg-cal-d">
+              <div class="tg-msg-avatar">🤖</div>
+              <div class="tg-msg-bubble">
+                <div class="tg-msg-name">CAL-D</div>
+                <div class="tg-msg-text">it's coming 👀 portal energy is strong rn</div>
+              </div>
+            </div>
+            <div class="tg-msg" style="animation:fadeUp .4s 2.4s ease both;opacity:0;">
+              <div class="tg-msg-avatar tg-anon" style="background:rgba(0,255,157,.1);border-color:rgba(0,255,157,.2);color:var(--green);">★</div>
+              <div class="tg-msg-bubble"><div class="tg-msg-name" style="color:var(--green);">Explorer_42</div><div class="tg-msg-text">ngl this feels different from other projects</div></div>
+            </div>
+            <div class="tg-typing">
+              <span></span><span></span><span></span>
+              <div class="tg-typing-label">Someone is typing…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="site-footer">
+    <div class="footer-brand">
+      <img src="3580.png" alt="CAL-D" onerror="this.style.display='none'">
+      CALDRISIA
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://x.com/caldrisia" target="_blank">Twitter / X</a></li>
+      <li><a href="https://t.me/caldrisia" target="_blank">Telegram</a></li>
+      <li><a href="Caldrisia_Whitepaper_EN.pdf" target="_blank">Whitepaper</a></li>
+    </ul>
+    <div class="footer-sol">◎ SOLANA · 2026</div>
+  </div>
+</footer>
+<div class="disclaimer">
+  $CAL-D is a community meme token on Solana, created for entertainment and world-building purposes. Crypto assets are highly speculative and volatile. Never invest more than you can afford to lose. This is not financial advice — always do your own research. The universe is for everyone. The financial decisions are yours alone.
+</div>
+
+<!-- LIVE TRANSMISSION -->
+<div class="live-transmission" id="lt">
+  <div class="lt-close" id="lt-close">×</div>
+  <img class="lt-avatar" src="3580.png" alt="CAL-D" onerror="this.style.background='rgba(153,69,255,.2)'">
+  <div class="lt-body">
+    <div class="lt-header">
+      <span class="lt-name">CAL-D</span>
+      <div class="lt-dot"></div>
+    </div>
+    <div class="lt-msg" id="lt-msg">🌌 Explorer Log #001 — Universe initialization complete. Welcome.</div>
+    <div class="lt-time" id="lt-time">just now</div>
+  </div>
+</div>
+
+<script>
+// Burger
+var burger=document.getElementById('burger'),drawer=document.getElementById('drawer'),dimmer=document.getElementById('dimmer');
+function openD(){drawer.style.display='block';dimmer.style.display='block';}
+function closeD(){drawer.style.display='none';dimmer.style.display='none';}
+burger.addEventListener('click',function(){drawer.style.display==='block'?closeD():openD();});
+dimmer.addEventListener('click',closeD);
+drawer.querySelectorAll('a').forEach(function(a){
+  a.addEventListener('click',function(){
+    var h=a.getAttribute('href');closeD();
+    if(h&&h.startsWith('#')){setTimeout(function(){var el=document.getElementById(h.slice(1));if(el)window.scrollTo({top:el.offsetTop-70,behavior:'smooth'});},100);}
+  });
+});
+
+// Scroll reveal
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e,i){
+    if(e.isIntersecting){
+      e.target.style.transitionDelay=(i*.05)+'s';
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.07});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+// Live Transmission — organic random timing
+(function(){
+  var messages = [
+    "🌌 Explorer Log #008 uploaded to the archive.",
+    "🤖 CAL-D detected unusual portal energy.",
+    "🎮 Arena systems charging… almost ready.",
+    "📚 New discoveries added to the Library.",
+    "🛰 Explorer signal received from outer sectors.",
+    "☀️ GM, Explorers. Another day in Caldrisia.",
+    "🔭 Scanning uncharted coordinates… signal strong.",
+    "✨ Something new is taking shape in the universe.",
+    "💫 The universe has no edge. Keep exploring.",
+    "🌍 New Explorers arriving. The community grows.",
+    "🌌 Portal activity detected — stay curious.",
+    "🤖 CAL-D reporting from the field: all systems nominal.",
+  ];
+  var times = ['just now', 'moments ago', '1 min ago', '2 min ago'];
+  var shown = 0;
+  var lt = document.getElementById('lt');
+  var ltMsg = document.getElementById('lt-msg');
+  var ltTime = document.getElementById('lt-time');
+  var ltClose = document.getElementById('lt-close');
+  if (!lt) return;
+
+  var dismissed = false;
+  ltClose.addEventListener('click', function(e){
+    e.stopPropagation();
+    dismissed = true;
+    lt.classList.add('hiding');
+    setTimeout(function(){ lt.style.display='none'; }, 300);
+    // Allow again after 3 mins
+    setTimeout(function(){ dismissed = false; }, 180000);
+  });
+
+  function showTransmission(){
+    if (dismissed) return;
+    var idx = Math.floor(Math.random() * messages.length);
+    lt.style.display = 'flex';
+    lt.classList.remove('hiding');
+    lt.style.animation = 'none'; lt.offsetHeight; lt.style.animation = '';
+    ltMsg.textContent = messages[idx];
+    ltTime.textContent = times[Math.floor(Math.random()*times.length)];
+    shown++;
+    // Auto-hide after 10s
+    setTimeout(function(){
+      if (!dismissed) {
+        lt.classList.add('hiding');
+        setTimeout(function(){ lt.style.display='none'; lt.classList.remove('hiding'); }, 300);
+      }
+    }, 10000);
+  }
+
+  function scheduleNext(){
+    // Random 45-90 seconds, skip ~30% of the time
+    var delay = (45 + Math.random() * 45) * 1000;
+    var willShow = Math.random() > 0.3;
+    setTimeout(function(){
+      if (willShow) showTransmission();
+      scheduleNext();
+    }, delay);
+  }
+
+  // First appearance after 12-20s
+  var firstDelay = (12 + Math.random() * 8) * 1000;
+  setTimeout(function(){
+    showTransmission();
+    scheduleNext();
+  }, firstDelay);
+})();
+
+
+
+// Arena dot — subtle pulse animation variation
+(function(){
+  var dot = document.getElementById('arena-dot');
+  var status = document.getElementById('arena-status');
+  if (!dot || !status) return;
+  var states = ['Charging…', 'Warming up…', 'Almost…'];
+  var i = 0;
+  setInterval(function(){
+    i = (i + 1) % states.length;
+    status.textContent = states[i];
+  }, 4000);
+})();
+</script>
+</body>
+</html>

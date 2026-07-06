@@ -1,0 +1,112 @@
+CALDRISIA – PROJECT OVERVIEW
+
+1. Origin
+
+Caldrisia began as a rebranding of the original Nexxopia project after
+the X account was suspended. The vision expanded from a crypto hub into
+a living fantasy/sci-fi universe where the community discovers the world
+together.
+
+2. Core Vision
+
+Caldrisia is not just a cryptocurrency project. It is an evolving
+universe combining: - Worldbuilding - Community - Education -
+Exploration - AI - Interactive web experiences - Games - Blockchain
+integration (future) - Storytelling
+
+Community members are called Explorers.
+
+The mascot is CAL-D, a friendly explorer robot that guides users through
+the world.
+
+3. Previous Nexxopia Concept
+
+Tagline: Explore • Play • Earn • Belong
+
+Main modules: - Library - Portal Atlas - Signal Center - Arena -
+Community Hubs - AI Assistant
+
+These ideas remain part of Caldrisia but are presented inside a fantasy
+world.
+
+4. Planned Features
+
+Library
+
+Educational content: - Crypto - Blockchain - AI - Tutorials - Explorer
+Logs - Videos - Guides
+
+Portal Atlas
+
+Interactive map of blockchain ecosystems.
+
+Signal Center
+
+News, ecosystem updates, security alerts and research. Not financial
+advice.
+
+Arena
+
+Browser games. Leaderboards. Challenges. Future rewards.
+
+AI Guide
+
+CAL-D will eventually become an AI assistant that helps users understand
+Caldrisia and blockchain concepts.
+
+5. Storytelling
+
+The project uses continuous lore.
+
+There are no reboots.
+
+Every post continues the previous story.
+
+Content types: - GM posts - GN posts - Explorer Logs - Community
+updates - Story events
+
+The story follows CAL-D discovering: - ancient maps - forgotten ruins -
+magical crystals - mysterious keys - hidden temples - the Ancient Gate -
+the entrance into Caldrisia
+
+6. Visual Direction
+
+Preferred atmosphere: - fantasy - sci-fi - forests - ancient stone
+ruins - glowing crystals - soft mist - sunrise - peaceful adventure
+
+Avoid: - fire - weapons - horror - dark war scenes
+
+7. Long-term Goal
+
+Create an immersive universe that can grow into: - Interactive website -
+AI companion - Community platform - Games - Collectibles - Blockchain
+integrations - Events - Seasonal story chapters
+
+  -------------------
+  PROMPT FOR CLAUDE
+  -------------------
+
+You are joining the Caldrisia project as a senior product designer, UX
+architect, worldbuilder and software engineer.
+
+Caldrisia is NOT a meme coin and NOT just a crypto website.
+
+It is a long-term fantasy/sci-fi universe where users become Explorers
+guided by a friendly robot named CAL-D.
+
+Your job is to preserve the identity of Caldrisia in every suggestion.
+
+Core principles: - Exploration before speculation. - Community before
+hype. - Education before marketing. - Beautiful immersive design. -
+Continuous story with no resets. - Friendly, magical and mysterious
+atmosphere. - Premium quality UI/UX. - Mobile-first. - Scalable
+architecture. - Future AI integration. - Future blockchain integration.
+
+When designing features always ask: 1. Does this make the world feel
+more alive? 2. Does it improve the Explorer experience? 3. Does it fit
+the lore? 4. Can it scale?
+
+Never redesign Caldrisia into a generic crypto dashboard.
+
+Instead build an immersive universe where exploration, learning, games
+and community naturally coexist.
