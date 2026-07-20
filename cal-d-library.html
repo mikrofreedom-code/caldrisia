@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#06020e">
+<meta name="description" content="The Caldrisia Library — free books, whitepapers, reports and courses on crypto, blockchain, AI and trading. 100% free, 100% legal, no registration.">
+<title>Library — Caldrisia | Free Crypto, Blockchain &amp; AI Knowledge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #06020e;
+  --bg2:    #0c0519;
+  --bg3:    #120820;
+  --bg4:    #1a0e2e;
+  --purple: #9945FF;
+  --pink:   #FF2D9B;
+  --cyan:   #00E5FF;
+  --gold:   #FFB800;
+  --green:  #00FF9D;
+  --orange: #FF6B35;
+  --white:  #F0EEFF;
+  --dim:    rgba(240,238,255,0.58);
+  --muted:  rgba(240,238,255,0.32);
+  --border: rgba(153,69,255,0.14);
+  --borderb:rgba(153,69,255,0.32);
+  --purple-ghost: rgba(153,69,255,0.08);
+  --pink-ghost:   rgba(255,45,155,0.08);
+  --cyan-ghost:   rgba(0,229,255,0.08);
+  --gold-ghost:   rgba(255,184,0,0.08);
+  --green-ghost:  rgba(0,255,157,0.08);
+  --orange-ghost: rgba(255,107,53,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Exo 2', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  cursor: default;
+}
+a, button { cursor: pointer; }
+
+/* ── AMBIENT ── */
+.orb { position: fixed; border-radius: 50%; pointer-events: none; filter: blur(110px); z-index:0; }
+.orb-1 { width:700px;height:700px;background:radial-gradient(circle,rgba(153,69,255,.09),transparent 70%);top:-200px;left:-150px;animation:orbf 14s ease-in-out infinite; }
+.orb-2 { width:500px;height:500px;background:radial-gradient(circle,rgba(0,229,255,.06),transparent 70%);top:40%;right:-100px;animation:orbf 18s ease-in-out infinite;animation-delay:-5s; }
+.orb-3 { width:400px;height:400px;background:radial-gradient(circle,rgba(255,45,155,.05),transparent 70%);bottom:5%;left:15%;animation:orbf 16s ease-in-out infinite;animation-delay:-9s; }
+@keyframes orbf { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-50px) scale(1.06)} }
+
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:0;
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.1} }
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:900;
+  height:62px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 40px;
+  background:rgba(6,2,14,.88);
+  backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo { display:flex; align-items:center; gap:11px; text-decoration:none; }
+.nav-logo img { width:36px; height:36px; border-radius:50%; object-fit:cover; border:1.5px solid rgba(153,69,255,.4); box-shadow:0 0 12px rgba(153,69,255,.3); }
+.nav-logo-name {
+  font-family:'Orbitron',sans-serif; font-size:17px; font-weight:700; letter-spacing:.08em;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.nav-menu { display:flex; align-items:center; gap:4px; list-style:none; }
+.nav-menu a {
+  font-size:13px; font-weight:500; color:var(--muted);
+  text-decoration:none; padding:6px 13px; border-radius:6px;
+  letter-spacing:.04em; text-transform:uppercase;
+  transition:color .12s, background .12s;
+}
+.nav-menu a:hover { color:var(--white); background:rgba(153,69,255,.1); }
+.nav-menu a.active { color:var(--purple)!important; background:rgba(153,69,255,.1); }
+.nav-cta {
+  font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700; letter-spacing:.1em;
+  background:linear-gradient(135deg,var(--purple),var(--pink));
+  color:#fff; border:none; padding:10px 22px; border-radius:6px;
+  cursor:pointer; text-decoration:none; display:inline-block;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 0 18px rgba(153,69,255,.3);
+}
+.nav-cta:hover { transform:translateY(-2px); box-shadow:0 4px 24px rgba(153,69,255,.5); }
+#burger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px; }
+#burger span { display:block; width:22px; height:2px; background:var(--cyan); border-radius:2px; }
+#drawer {
+  display:none; position:fixed; top:0; right:0; width:260px; height:100%;
+  background:#09031a; border-left:1px solid var(--border);
+  z-index:9100; padding:72px 0 40px; overflow-y:auto;
+}
+#drawer a {
+  display:block; padding:14px 24px; font-size:14px; font-weight:500;
+  color:var(--dim); text-decoration:none;
+  border-bottom:1px solid rgba(153,69,255,.07);
+  letter-spacing:.04em; text-transform:uppercase;
+  transition:color .15s, background .15s;
+}
+#drawer a:hover { color:var(--cyan); background:rgba(0,229,255,.05); }
+#dimmer { display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9050; }
+
+/* ── EXPLORER FEED (ticker) ── */
+.explorer-feed {
+  margin-top:62px; height:40px; overflow:hidden;
+  background:rgba(153,69,255,.05);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center;
+  position:relative; z-index:1;
+}
+.explorer-feed:hover .feed-inner { animation-play-state:paused; }
+.feed-label {
+  font-family:'Orbitron',sans-serif; font-size:9px; font-weight:700;
+  letter-spacing:.16em; color:rgba(153,69,255,.5);
+  padding:0 16px; flex-shrink:0;
+  border-right:1px solid var(--border);
+  white-space:nowrap;
+}
+.feed-inner {
+  display:flex; white-space:nowrap; align-items:center;
+  animation:feedscroll 32s linear infinite;
+  padding-left:16px;
+}
+@keyframes feedscroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.feed-item {
+  font-family:'Exo 2',sans-serif; font-weight:400;
+  font-size:12px; color:var(--muted); letter-spacing:.04em;
+  padding:0 22px; display:inline-flex; align-items:center; gap:8px;
+  white-space:nowrap;
+}
+.feed-item.bright { color:var(--cyan); }
+.feed-item.gold   { color:var(--gold); }
+.feed-item.pink   { color:var(--pink); }
+.feed-sep { color:rgba(153,69,255,.25); font-size:10px; flex-shrink:0; }
+
+/* ── HERO ── */
+.hero {
+  position:relative; z-index:1;
+  min-height:78vh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; overflow:hidden;
+  padding:150px 24px 64px;
+  background-image:url("hht-library-bg.jpg");
+  background-size:cover; background-position:center top; background-repeat:no-repeat;
+}
+.hero-overlay {
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 0%, rgba(153,69,255,.18), transparent 70%),
+    linear-gradient(to bottom, rgba(6,2,14,.90) 0%, rgba(6,2,14,.86) 35%, rgba(6,2,14,.96) 85%, var(--bg) 100%);
+}
+.hero > * { position:relative; z-index:1; }
+
+.hero-log {
+  display:inline-flex; align-items:center; gap:8px;
+  border:1px solid rgba(0,229,255,.2);
+  background:rgba(0,229,255,.05);
+  border-radius:100px; padding:6px 18px;
+  font-family:'Orbitron',sans-serif; font-size:9px;
+  color:var(--cyan); letter-spacing:.18em;
+  margin-bottom:26px;
+  opacity:0; animation:fadeUp .5s .1s ease forwards;
+}
+.log-dot { width:5px; height:5px; border-radius:50%; background:var(--cyan); animation:blink 1.8s infinite; }
+
+.hero-title-lib {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(40px,7.5vw,84px);
+  font-weight:900; line-height:.95; letter-spacing:.02em;
+  margin-bottom:16px;
+  background:linear-gradient(140deg,#fff 0%,var(--cyan) 35%,var(--purple) 65%,var(--pink) 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 6px 30px rgba(0,0,0,.85));
+  opacity:0; animation:fadeUp .5s .2s ease forwards;
+}
+.hero-tagline-lib {
+  font-family:'Exo 2',sans-serif; font-weight:600; letter-spacing:.03em;
+  font-size:clamp(14px,2vw,19px); color:var(--gold);
+  margin-bottom:26px; text-shadow:0 2px 16px rgba(0,0,0,.9);
+  opacity:0; animation:fadeUp .5s .28s ease forwards;
+}
+.hero-desc-lib {
+  max-width:600px; font-size:15px; font-weight:300; line-height:1.85;
+  color:var(--dim); margin-bottom:24px;
+  text-shadow:0 2px 12px rgba(0,0,0,.9);
+  opacity:0; animation:fadeUp .5s .36s ease forwards;
+}
+.hero-desc-lib strong { color:var(--white); font-weight:500; }
+.hero-desc-lib em { color:var(--cyan); font-style:normal; }
+
+.hero-legal-lib {
+  display:inline-flex; align-items:center; gap:9px;
+  border:1px solid rgba(0,255,157,.2);
+  background:rgba(0,255,157,.06);
+  border-radius:100px; padding:8px 20px; margin-bottom:30px;
+  font-family:'Orbitron',sans-serif; font-size:10px; font-weight:600;
+  color:var(--green); letter-spacing:.1em;
+  opacity:0; animation:fadeUp .5s .44s ease forwards;
+}
+.legal-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); animation:blink 2s infinite; }
+
+.hero-back-lib {
+  font-family:'Orbitron',sans-serif; font-size:11px; font-weight:600; letter-spacing:.08em;
+  background:transparent; color:var(--muted);
+  border:1px solid rgba(255,255,255,.12); padding:12px 26px; border-radius:7px;
+  text-decoration:none; display:inline-block;
+  transition:border-color .15s,color .15s;
+  opacity:0; animation:fadeUp .5s .5s ease forwards;
+}
+.hero-back-lib:hover { border-color:rgba(255,255,255,.3); color:var(--white); }
+
+/* ── DIVIDER ── */
+.neon-line {
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--purple),var(--cyan),var(--pink),transparent);
+  box-shadow:0 0 14px rgba(153,69,255,.4);
+  position:relative; z-index:1;
+}
+
+/* ── STATS ── */
+.lib-stats-wrap { max-width:1180px; margin:0 auto; padding:40px 24px 0; position:relative; z-index:1; }
+.lib-stats {
+  display:grid; grid-template-columns:repeat(5,1fr);
+  border:1px solid var(--border); border-radius:12px; overflow:hidden;
+}
+.lstat { background:var(--bg2); padding:26px 16px; text-align:center; border-right:1px solid var(--border); }
+.lstat:last-child { border-right:none; }
+.lstat-val {
+  font-family:'Orbitron',sans-serif; font-size:30px; font-weight:900; display:block; margin-bottom:6px;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.lstat-lbl { font-size:10px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+
+/* ── SECTION / CONTROLS ── */
+.lib-section { max-width:1280px; margin:0 auto; padding:60px 24px 0; position:relative; z-index:1; }
+.s-eye {
+  font-family:'Orbitron',sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.2em; color:var(--purple); text-transform:uppercase;
+  margin-bottom:22px; display:flex; align-items:center; gap:14px;
+}
+.s-eye::before { content:'// '; opacity:.4; }
+.s-eye::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,var(--border),transparent); }
+
+.controls { display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:36px; }
+.search-wrap { position:relative; flex:1; min-width:260px; }
+.search-box {
+  width:100%; background:var(--bg2); border:1px solid var(--border);
+  padding:14px 46px 14px 18px; border-radius:8px;
+  font-family:'Exo 2',sans-serif; font-size:13px; font-weight:400; color:var(--white); outline:none;
+  transition:border-color .2s,box-shadow .2s;
+}
+.search-box::placeholder { color:var(--muted); }
+.search-box:focus { border-color:var(--cyan); box-shadow:0 0 16px rgba(0,229,255,.15); }
+.search-icon { position:absolute; right:16px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:16px; pointer-events:none; }
+.filters { display:flex; gap:8px; flex-wrap:wrap; }
+.filter-btn {
+  font-family:'Orbitron',sans-serif; font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  padding:12px 18px; border:1px solid var(--border); border-radius:7px;
+  background:var(--bg2); color:var(--muted); cursor:pointer; white-space:nowrap;
+  transition:border-color .2s,color .2s,background .2s,box-shadow .2s;
+}
+.filter-btn:hover { border-color:var(--purple); color:var(--white); background:rgba(153,69,255,.08); }
+.filter-btn.active { border-color:var(--purple); color:var(--white); background:rgba(153,69,255,.12); box-shadow:0 0 16px rgba(153,69,255,.2); }
+
+/* ── LIBRARY GRID / CARDS ── */
+.library-grid {
+  max-width:1280px; margin:0 auto; padding:0 24px 20px;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px;
+  position:relative; z-index:1;
+}
+.resource-card {
+  position:relative; background:var(--bg2); border:1px solid var(--border); border-radius:14px;
+  overflow:hidden; cursor:default; display:flex; flex-direction:column;
+  transition:transform .2s,border-color .2s,box-shadow .2s;
+  opacity:0; animation:fadeUp .5s ease forwards;
+}
+.resource-card:hover { transform:translateY(-4px); box-shadow:0 10px 34px rgba(0,0,0,.35), 0 0 20px var(--type-ghost); }
+.resource-card[data-type="book"]       { --type-color:var(--gold);   --type-ghost:var(--gold-ghost); }
+.resource-card[data-type="whitepaper"] { --type-color:var(--cyan);   --type-ghost:var(--cyan-ghost); }
+.resource-card[data-type="report"]     { --type-color:var(--purple); --type-ghost:var(--purple-ghost); }
+.resource-card[data-type="course"]     { --type-color:var(--green);  --type-ghost:var(--green-ghost); }
+.resource-card[data-type="video"]      { --type-color:var(--pink);   --type-ghost:var(--pink-ghost); }
+.resource-card[data-type="gaming"]     { --type-color:var(--orange); --type-ghost:var(--orange-ghost); }
+.resource-card:hover { border-color:var(--type-color); }
+.card-stripe { height:3px; background:linear-gradient(90deg,var(--type-color),transparent); opacity:.7; }
+.card-inner { padding:22px; flex:1; display:flex; flex-direction:column; }
+.card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:15px; }
+.card-type-badge {
+  font-family:'Orbitron',sans-serif; font-size:9px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--type-color); padding:4px 10px; border:1px solid var(--type-color); border-radius:4px;
+  background:var(--type-ghost); white-space:nowrap;
+}
+.card-free { font-family:'Orbitron',sans-serif; font-size:9px; letter-spacing:.06em; color:var(--green); opacity:.85; }
+.card-title { font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700; color:var(--white); line-height:1.35; margin-bottom:8px; letter-spacing:.01em; }
+.card-author { font-family:'Exo 2',sans-serif; font-size:11px; font-weight:500; letter-spacing:.02em; color:var(--type-color); opacity:.75; margin-bottom:12px; }
+.card-desc { font-size:13px; font-weight:300; line-height:1.7; color:var(--dim); margin-bottom:16px; flex:1; }
+.card-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
+.tag { font-family:'Orbitron',sans-serif; font-size:8px; letter-spacing:.08em; text-transform:uppercase; padding:3px 8px; border:1px solid var(--border); border-radius:3px; color:var(--muted); }
+.card-footer-row { display:flex; justify-content:space-between; align-items:center; padding-top:15px; border-top:1px solid var(--border); }
+.card-level { font-family:'Orbitron',sans-serif; font-size:9px; color:var(--muted); letter-spacing:.06em; display:flex; align-items:center; gap:6px; }
+.level-dots { display:flex; gap:3px; }
+.dot { width:6px; height:6px; border-radius:50%; background:var(--border); }
+.dot.filled { background:var(--type-color); }
+.card-link { font-family:'Orbitron',sans-serif; font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--type-color); text-decoration:none; display:flex; align-items:center; gap:6px; transition:gap .2s; }
+.card-link:hover { gap:10px; }
+.new-badge { font-family:'Orbitron',sans-serif; font-size:8px; letter-spacing:.08em; background:var(--cyan); color:#06020e; padding:2px 6px; margin-left:8px; border-radius:2px; vertical-align:middle; }
+.no-results { display:none; grid-column:1/-1; text-align:center; padding:80px 24px; }
+.no-results.visible { display:block; }
+.no-results p { font-family:'Orbitron',sans-serif; font-size:12px; color:var(--muted); letter-spacing:.1em; }
+
+/* ── DISCLAIMER PANELS ── */
+.disclaimer-panels { max-width:1280px; margin:8px auto 0; padding:0 24px; display:flex; flex-direction:column; gap:16px; position:relative; z-index:1; }
+.disclaimer-box, .legal-inner {
+  border-radius:12px; padding:20px 26px; display:flex; gap:16px; align-items:flex-start;
+}
+.disclaimer-box { border:1px solid rgba(0,255,157,.2); background:var(--green-ghost); }
+.legal-inner { border:1px solid rgba(255,184,0,.22); background:var(--gold-ghost); }
+.disclaimer-icon, .legal-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+.disclaimer-text, .legal-text { font-size:13px; font-weight:300; line-height:1.75; color:var(--dim); }
+.disclaimer-text strong { color:var(--green); font-weight:500; }
+.legal-text strong { color:var(--gold); font-weight:500; }
+
+/* ── FOOTER ── */
+.site-footer {
+  border-top:1px solid var(--border); padding:44px 24px 24px;
+  max-width:1280px; margin:56px auto 0;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:18px; position:relative; z-index:1;
+}
+.footer-brand {
+  font-family:'Orbitron',sans-serif; font-size:16px; font-weight:700;
+  background:linear-gradient(90deg,var(--cyan),var(--purple));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  display:flex; align-items:center; gap:10px;
+}
+.footer-brand img { width:28px;height:28px;border-radius:50%;border:1px solid var(--borderb); }
+.footer-links { display:flex; gap:20px; list-style:none; flex-wrap:wrap; }
+.footer-links a { font-size:12px; color:var(--muted); text-decoration:none; letter-spacing:.06em; transition:color .15s; }
+.footer-links a:hover { color:var(--cyan); }
+.footer-sol {
+  font-family:'Orbitron',sans-serif; font-size:10px; letter-spacing:.1em;
+  background:rgba(153,69,255,.08); border:1px solid rgba(153,69,255,.2);
+  border-radius:4px; padding:5px 12px; color:var(--purple);
+}
+.disclaimer {
+  max-width:1280px; margin:0 auto; padding:16px 24px 56px;
+  font-size:11px; color:rgba(240,238,255,.15); line-height:1.7;
+  position:relative; z-index:1;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  .lib-stats { grid-template-columns:repeat(3,1fr); }
+  .lstat:nth-child(3) { border-right:none; }
+  .lstat:nth-child(4), .lstat:nth-child(5) { border-top:1px solid var(--border); }
+}
+@media (max-width:768px) {
+  nav { padding:0 16px; height:54px; }
+  .nav-menu,.nav-cta { display:none; }
+  #burger { display:flex; }
+  .explorer-feed { margin-top:54px; }
+  .hero { padding:110px 20px 48px; }
+  .lib-section { padding:48px 16px 0; }
+  .library-grid { grid-template-columns:1fr; padding:0 16px 20px; }
+  .controls { padding:0; }
+  .disclaimer-panels { padding:0 16px; }
+  .site-footer { flex-direction:column; align-items:flex-start; padding:36px 16px 20px; }
+}
+@media (max-width:480px) {
+  .lib-stats { grid-template-columns:repeat(2,1fr); }
+  .lstat:nth-child(2n) { border-right:none; }
+  .lstat-val { font-size:24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- AMBIENT -->
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="3580.png" alt="CAL-D" onerror="this.style.display='none'">
+    <span class="nav-logo-name">CALDRISIA</span>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="index.html#meet-cal-d">Meet CAL-D</a></li>
+    <li><a href="index.html#universe">Universe</a></li>
+    <li><a href="cal-d-library.html" class="active">Library</a></li>
+    <li><a href="index.html#roadmap">Roadmap</a></li>
+    <li><a href="Caldrisia_Whitepaper_EN.pdf" target="_blank">Whitepaper</a></li>
+    <li><a href="index.html#explorer-portal" style="color:var(--cyan)!important;">Portal ◎</a></li>
+  </ul>
+  <a href="https://t.me/caldrisia" target="_blank" class="nav-cta">JOIN EXPLORERS</a>
+  <button id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div id="drawer">
+  <a href="index.html">Home</a>
+  <a href="index.html#meet-cal-d">Meet CAL-D</a>
+  <a href="index.html#universe">Universe</a>
+  <a href="cal-d-library.html" style="color:var(--purple)">Library ◎</a>
+  <a href="index.html#roadmap">Roadmap</a>
+  <a href="Caldrisia_Whitepaper_EN.pdf" target="_blank">Whitepaper</a>
+  <a href="index.html#explorer-portal" style="color:var(--cyan)">Enter the Portal ◎</a>
+  <a href="https://x.com/caldrisia" target="_blank">Twitter / X</a>
+  <a href="https://t.me/caldrisia" target="_blank">Telegram</a>
+</div>
+<div id="dimmer"></div>
+
+<!-- EXPLORER FEED -->
+<div class="explorer-feed">
+  <div class="feed-label">CAL-D ·</div>
+  <div class="feed-inner">
+    <span class="feed-item bright">📚 Archive Log #001 — Library coordinates locked</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🤖 CAL-D catalogued another discovery</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item gold">🔭 Portal found — the Library is open</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">✨ 100% free, 100% legal, always</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item bright">🌌 Knowledge is part of the universe too</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🛰 Scanning for more resources…</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item pink">📖 Books, whitepapers, courses — no cost</span>
+    <span class="feed-sep">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="feed-item bright">📚 Archive Log #001 — Library coordinates locked</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🤖 CAL-D catalogued another discovery</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item gold">🔭 Portal found — the Library is open</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">✨ 100% free, 100% legal, always</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item bright">🌌 Knowledge is part of the universe too</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item">🛰 Scanning for more resources…</span>
+    <span class="feed-sep">·</span>
+    <span class="feed-item pink">📖 Books, whitepapers, courses — no cost</span>
+    <span class="feed-sep">·</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-log"><div class="log-dot"></div>Portal Found · Library Online</div>
+  <h1 class="hero-title-lib">THE ARCHIVE</h1>
+  <p class="hero-tagline-lib">Free Books, Whitepapers, Reports &amp; Courses — Crypto, Blockchain, AI &amp; Trading</p>
+  <p class="hero-desc-lib">
+    CAL-D followed a faint signal deep into the universe and found this: a growing archive of <strong>knowledge, free for every Explorer</strong>. No paywalls, no logins — <em>just bring your curiosity</em>.
+  </p>
+  <div class="hero-legal-lib"><div class="legal-dot"></div>100% FREE · 100% LEGAL · NO REGISTRATION REQUIRED</div>
+  <br>
+  <a href="index.html#universe" class="hero-back-lib">← Back to the Universe</a>
+</section>
+
+<div class="neon-line"></div>
+
+<!-- STATS -->
+<div class="lib-stats-wrap">
+  <div class="lib-stats">
+    <div class="lstat"><span class="lstat-val" id="statTotal">0</span><div class="lstat-lbl">Resources</div></div>
+    <div class="lstat"><span class="lstat-val" id="statBooks">0</span><div class="lstat-lbl">Books</div></div>
+    <div class="lstat"><span class="lstat-val" id="statCourses">0</span><div class="lstat-lbl">Courses</div></div>
+    <div class="lstat"><span class="lstat-val" id="statWP">0</span><div class="lstat-lbl">Whitepapers</div></div>
+    <div class="lstat"><span class="lstat-val">$0</span><div class="lstat-lbl">Cost</div></div>
+  </div>
+</div>
+
+<!-- CONTROLS + GRID -->
+<section class="lib-section">
+  <span class="s-eye">Archive — Verified Links</span>
+  <div class="controls">
+    <div class="search-wrap">
+      <input class="search-box" id="searchInput" type="text" placeholder="Search books, topics, authors…" oninput="applyFilters()"/>
+      <span class="search-icon">⌕</span>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('book',this)">📚 Books</button>
+      <button class="filter-btn" onclick="setFilter('whitepaper',this)">📄 Whitepapers</button>
+      <button class="filter-btn" onclick="setFilter('report',this)">📊 Reports</button>
+      <button class="filter-btn" onclick="setFilter('course',this)">🎓 Courses</button>
+      <button class="filter-btn" onclick="setFilter('video',this)">▶ Video</button>
+      <button class="filter-btn" onclick="setFilter('gaming',this)">🎮 Gaming</button>
+    </div>
+  </div>
+</section>
+
+<div class="library-grid" id="libraryGrid">
+
+  <!-- ══ BOOKS ══ -->
+  <article class="resource-card" data-type="book" style="animation-delay:0.05s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📚 Book</span><span class="card-free">FREE PDF</span></div>
+      <h3 class="card-title">Bitcoin and Cryptocurrency Technologies</h3>
+      <p class="card-author">Arvind Narayanan et al. — Princeton University</p>
+      <p class="card-desc">The most comprehensive academic textbook on Bitcoin. Covers cryptographic foundations, consensus, mining, and the entire ecosystem. Used in university courses worldwide.</p>
+      <div class="card-tags"><span class="tag">Bitcoin</span><span class="tag">Blockchain</span><span class="tag">Academic</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>Advanced</div>
+        <a href="https://bitcoinbook.cs.princeton.edu/" target="_blank" class="card-link">Read Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="book" style="animation-delay:0.1s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📚 Book</span><span class="card-free">FREE ONLINE</span></div>
+      <h3 class="card-title">Mastering Bitcoin</h3>
+      <p class="card-author">Andreas M. Antonopoulos — O'Reilly</p>
+      <p class="card-desc">The go-to technical guide for Bitcoin developers and enthusiasts. Keys, transactions, wallets, mining — available for free on GitHub under an open-source license.</p>
+      <div class="card-tags"><span class="tag">Bitcoin</span><span class="tag">Technical</span><span class="tag">Wallets</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>Advanced</div>
+        <a href="https://github.com/bitcoinbook/bitcoinbook" target="_blank" class="card-link">Read Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="book" style="animation-delay:0.15s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📚 Book</span><span class="card-free">FREE ONLINE</span></div>
+      <h3 class="card-title">Mastering Ethereum</h3>
+      <p class="card-author">Andreas M. Antonopoulos &amp; Gavin Wood</p>
+      <p class="card-desc">The definitive developer guide to Ethereum. Smart contracts, DApps, EVM, Solidity — everything needed to build on the world's leading smart contract platform.</p>
+      <div class="card-tags"><span class="tag">Ethereum</span><span class="tag">Solidity</span><span class="tag">DeFi</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>Advanced</div>
+        <a href="https://github.com/ethereumbook/ethereumbook" target="_blank" class="card-link">Read Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- NEW BOOK -->
+  <article class="resource-card" data-type="book" style="animation-delay:0.38s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📚 Book</span><span class="card-free">FREE ONLINE<span class="new-badge">NEW</span></span></div>
+      <h3 class="card-title">The Network State</h3>
+      <p class="card-author">Balaji S. Srinivasan</p>
+      <p class="card-desc">A vision of how blockchain and crypto can enable the creation of new digital communities and societies. One of the most influential Web3 books today — available completely free online.</p>
+      <div class="card-tags"><span class="tag">Web3</span><span class="tag">Future</span><span class="tag">Governance</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://thenetworkstate.com/" target="_blank" class="card-link">Read Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ WHITEPAPERS ══ -->
+  <article class="resource-card" data-type="whitepaper" style="animation-delay:0.4s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📄 Whitepaper</span><span class="card-free">FREE PDF</span></div>
+      <h3 class="card-title">Bitcoin: A Peer-to-Peer Electronic Cash System</h3>
+      <p class="card-author">Satoshi Nakamoto · 2008</p>
+      <p class="card-desc">The original. Nine pages that changed the world. Every crypto enthusiast should read the whitepaper that started it all — simple, elegant, and revolutionary.</p>
+      <div class="card-tags"><span class="tag">Bitcoin</span><span class="tag">Genesis</span><span class="tag">Satoshi</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>Beginner</div>
+        <a href="https://bitcoin.org/bitcoin.pdf" target="_blank" class="card-link">Read PDF →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="whitepaper" style="animation-delay:0.45s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📄 Whitepaper</span><span class="card-free">FREE ONLINE</span></div>
+      <h3 class="card-title">Ethereum Whitepaper</h3>
+      <p class="card-author">Vitalik Buterin · 2014</p>
+      <p class="card-desc">The document that introduced smart contracts and the programmable blockchain. Essential reading to understand how DeFi, NFTs, and the entire Web3 ecosystem were born.</p>
+      <div class="card-tags"><span class="tag">Ethereum</span><span class="tag">Smart Contracts</span><span class="tag">Web3</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://ethereum.org/en/whitepaper/" target="_blank" class="card-link">Read →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="whitepaper" style="animation-delay:0.5s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📄 Whitepaper</span><span class="card-free">FREE PDF</span></div>
+      <h3 class="card-title">Solana: A High-Performance Blockchain</h3>
+      <p class="card-author">Anatoly Yakovenko · 2017</p>
+      <p class="card-desc">The technical paper behind Solana's Proof of History consensus. Understand the blockchain that powers $CAL-D — why it is fast, cheap, and built for global scale.</p>
+      <div class="card-tags"><span class="tag">Solana</span><span class="tag">PoH</span><span class="tag">Performance</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>Advanced</div>
+        <a href="https://solana.com/solana-whitepaper.pdf" target="_blank" class="card-link">Read PDF →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ REPORTS ══ -->
+  <article class="resource-card" data-type="report" style="animation-delay:0.55s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📊 Report</span><span class="card-free">FREE ONLINE</span></div>
+      <h3 class="card-title">Chainalysis Crypto Crime Report 2024</h3>
+      <p class="card-author">Chainalysis Research</p>
+      <p class="card-desc">Annual deep-dive into on-chain crime trends, scam patterns, hacks, and money laundering in crypto. Essential reading to understand risks and how to stay safe in the space.</p>
+      <div class="card-tags"><span class="tag">Security</span><span class="tag">On-Chain</span><span class="tag">Research</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://go.chainalysis.com/crypto-crime-2024.html" target="_blank" class="card-link">Download →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="report" style="animation-delay:0.6s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📊 Report</span><span class="card-free">FREE ONLINE</span></div>
+      <h3 class="card-title">State of Crypto Report 2024</h3>
+      <p class="card-author">a16z Crypto Research</p>
+      <p class="card-desc">Data-driven annual overview from Andreessen Horowitz. Blockchain adoption, developer activity, DeFi growth, stablecoins, AI, and the macro outlook for Web3.</p>
+      <div class="card-tags"><span class="tag">Market</span><span class="tag">Adoption</span><span class="tag">Web3</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://a16zcrypto.com/posts/article/state-of-crypto-report-2024/" target="_blank" class="card-link">Read →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ COURSES ══ -->
+  <!-- NEW: MIT -->
+  <article class="resource-card" data-type="course" style="animation-delay:0.62s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎓 Course</span><span class="card-free">FREE MIT<span class="new-badge">NEW</span></span></div>
+      <h3 class="card-title">Blockchain and Money — MIT OpenCourseWare</h3>
+      <p class="card-author">Prof. Gary Gensler — MIT Sloan School</p>
+      <p class="card-desc">The complete MIT course on blockchain and money. 23 lectures covering Bitcoin, distributed ledgers, smart contracts, DeFi, public policy, and regulation. 100% free.</p>
+      <div class="card-tags"><span class="tag">MIT</span><span class="tag">Blockchain</span><span class="tag">Finance</span><span class="tag">Policy</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>Advanced</div>
+        <a href="https://ocw.mit.edu/courses/15-s12-blockchain-and-money-fall-2018/" target="_blank" class="card-link">Access Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="course" style="animation-delay:0.65s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎓 Course</span><span class="card-free">FREE AUDIT</span></div>
+      <h3 class="card-title">Blockchain Basics — Coursera</h3>
+      <p class="card-author">University at Buffalo / SUNY</p>
+      <p class="card-desc">4-week university-level course covering blockchain fundamentals: consensus mechanisms, smart contracts, trust models, and real-world use cases. Fully free to audit.</p>
+      <div class="card-tags"><span class="tag">Blockchain</span><span class="tag">University</span><span class="tag">Certificate</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>Beginner</div>
+        <a href="https://www.coursera.org/learn/blockchain-basics" target="_blank" class="card-link">Enroll Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- NEW: Binance Academy -->
+  <article class="resource-card" data-type="course" style="animation-delay:0.68s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎓 Course</span><span class="card-free">FREE<span class="new-badge">NEW</span></span></div>
+      <h3 class="card-title">Binance Academy — Crypto Courses</h3>
+      <p class="card-author">Binance Academy · academy.binance.com</p>
+      <p class="card-desc">Hundreds of free articles, videos, and structured courses from beginner to advanced. Covers blockchain, trading, DeFi, Web3, NFT, and security. NFT certificates awarded upon completion.</p>
+      <div class="card-tags"><span class="tag">Blockchain</span><span class="tag">Trading</span><span class="tag">DeFi</span><span class="tag">NFT</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>All Levels</div>
+        <a href="https://academy.binance.com/en/courses" target="_blank" class="card-link">Start Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="course" style="animation-delay:0.7s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎓 Course</span><span class="card-free">FREE</span></div>
+      <h3 class="card-title">DeFi MOOC — Full University Course</h3>
+      <p class="card-author">UC Berkeley / Stanford / Columbia</p>
+      <p class="card-desc">The most comprehensive free DeFi course ever made. 15 lectures covering AMMs, lending protocols, stablecoins, MEV, regulation, and economic attacks. Graduate level.</p>
+      <div class="card-tags"><span class="tag">DeFi</span><span class="tag">AMM</span><span class="tag">Protocols</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>Advanced</div>
+        <a href="https://defi-learning.org/" target="_blank" class="card-link">Access Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="course" style="animation-delay:0.73s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎓 Course</span><span class="card-free">FREE AUDIT</span></div>
+      <h3 class="card-title">AI for Everyone</h3>
+      <p class="card-author">Andrew Ng — DeepLearning.AI · Coursera</p>
+      <p class="card-desc">Non-technical introduction to AI from one of the biggest names in the field. Understand what AI can and cannot do, how to use it in projects, and its impact on finance and crypto.</p>
+      <div class="card-tags"><span class="tag">AI</span><span class="tag">Non-Technical</span><span class="tag">Strategy</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>Beginner</div>
+        <a href="https://www.coursera.org/learn/ai-for-everyone" target="_blank" class="card-link">Enroll Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- NEW: Coinbase Learn -->
+  <article class="resource-card" data-type="course" style="animation-delay:0.76s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎓 Course</span><span class="card-free">FREE<span class="new-badge">NEW</span></span></div>
+      <h3 class="card-title">Coinbase Learn — Crypto Basics</h3>
+      <p class="card-author">Coinbase · coinbase.com/learn</p>
+      <p class="card-desc">Free foundational crypto lessons from one of the world's largest exchanges. Covers Bitcoin, Ethereum, wallets, DeFi, NFTs, and security — ideal for absolute beginners.</p>
+      <div class="card-tags"><span class="tag">Beginner</span><span class="tag">Bitcoin</span><span class="tag">Ethereum</span><span class="tag">Security</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>Beginner</div>
+        <a href="https://www.coinbase.com/learn/crypto-basics" target="_blank" class="card-link">Learn Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ VIDEO ══ -->
+  <article class="resource-card" data-type="video" style="animation-delay:0.8s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">▶ Video</span><span class="card-free">FREE · YOUTUBE</span></div>
+      <h3 class="card-title">But How Does Bitcoin Actually Work?</h3>
+      <p class="card-author">3Blue1Brown · YouTube</p>
+      <p class="card-desc">The most beautifully explained Bitcoin video ever made. 26 minutes of visual mathematics that will make you truly understand how Bitcoin works at a deep level.</p>
+      <div class="card-tags"><span class="tag">Bitcoin</span><span class="tag">Visual</span><span class="tag">Math</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://www.youtube.com/watch?v=bBC-nXj3Ng4" target="_blank" class="card-link">Watch →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="video" style="animation-delay:0.85s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">▶ Video</span><span class="card-free">FREE · YOUTUBE</span></div>
+      <h3 class="card-title">Crypto Trading Masterclass</h3>
+      <p class="card-author">Investopedia Academy · YouTube</p>
+      <p class="card-desc">Complete crypto trading foundation: chart reading, support/resistance, risk management, position sizing, and market psychology — all available on YouTube for free.</p>
+      <div class="card-tags"><span class="tag">Trading</span><span class="tag">Charts</span><span class="tag">Risk Management</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://www.youtube.com/@Investopedia" target="_blank" class="card-link">Watch →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="video" style="animation-delay:0.9s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">▶ Video</span><span class="card-free">FREE · YOUTUBE</span></div>
+      <h3 class="card-title">AI &amp; Crypto: The Convergence Explained</h3>
+      <p class="card-author">Coin Bureau · YouTube</p>
+      <p class="card-desc">How artificial intelligence is merging with blockchain. AI trading bots, AI-driven protocols, decentralised AI projects — the frontier of what is coming next in the AI+Web3 space.</p>
+      <div class="card-tags"><span class="tag">AI</span><span class="tag">Web3</span><span class="tag">Future</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://www.youtube.com/@CoinBureau" target="_blank" class="card-link">Watch →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- NEW: MIT Video on YouTube -->
+  <article class="resource-card" data-type="video" style="animation-delay:0.93s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">▶ Video</span><span class="card-free">FREE · YOUTUBE<span class="new-badge">NEW</span></span></div>
+      <h3 class="card-title">MIT Blockchain &amp; Money — Full Lecture Series</h3>
+      <p class="card-author">MIT OpenCourseWare · YouTube</p>
+      <p class="card-desc">All 23 lectures of the MIT Blockchain and Money course by Prof. Gary Gensler — free on YouTube. Money, ledgers, Bitcoin, smart contracts, and regulation.</p>
+      <div class="card-tags"><span class="tag">MIT</span><span class="tag">Lectures</span><span class="tag">Finance</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>Advanced</div>
+        <a href="https://www.youtube.com/playlist?list=PLUl4u3cNGP63UUkfL0onkxF6MYgVa04Fn" target="_blank" class="card-link">Watch →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ GAMING ══ -->
+  <article class="resource-card" data-type="gaming" style="animation-delay:0.95s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎮 Gaming</span><span class="card-free">FREE · ARCHIVE.ORG</span></div>
+      <h3 class="card-title">Retro Gaming Books — Non-Fiction Collection</h3>
+      <p class="card-author">Internet Archive · archive.org</p>
+      <p class="card-desc">A massive multi-gigabyte collection of non-fiction retro gaming books — histories, reviews, biographies, and studies covering the golden age of video games. Hundreds of titles available for free.</p>
+      <div class="card-tags"><span class="tag">Retro</span><span class="tag">History</span><span class="tag">Non-Fiction</span><span class="tag">Collection</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>All Levels</div>
+        <a href="https://archive.org/details/RetroGamingBooksNon-Fiction" target="_blank" class="card-link">Browse Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="gaming" style="animation-delay:1.0s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎮 Gaming</span><span class="card-free">FREE PDFs</span></div>
+      <h3 class="card-title">Retro Computing — Free Retro Gaming eBooks</h3>
+      <p class="card-author">DaddaRuleKonge · retrocompute.co.uk</p>
+      <p class="card-desc">A curated list of free PDFs covering retro gaming platforms — NES, Sega, GameCube, and more. Perfect for fans of classic gaming hardware and the history behind iconic consoles.</p>
+      <div class="card-tags"><span class="tag">NES</span><span class="tag">Sega</span><span class="tag">GameCube</span><span class="tag">Retro</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>Beginner</div>
+        <a href="https://www.retrocompute.co.uk/free-retro-gaming-ebooks/" target="_blank" class="card-link">Browse Free →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="gaming" style="animation-delay:1.05s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎮 Gaming</span><span class="card-free">FREE PDF</span></div>
+      <h3 class="card-title">Vintage Games: Grand Theft Auto, Super Mario &amp; More</h3>
+      <p class="card-author">Bill Loguidice &amp; Matt Barton</p>
+      <p class="card-desc">An insider look at the history of the most influential games of all time — Grand Theft Auto, Super Mario, Doom, Myst, and many more. A must-read for anyone who loves gaming history.</p>
+      <div class="card-tags"><span class="tag">History</span><span class="tag">GTA</span><span class="tag">Mario</span><span class="tag">Iconic</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>Beginner</div>
+        <a href="https://www.radioamatore.info/images/stories/libri/vintage_games_book_english.pdf" target="_blank" class="card-link">Read PDF →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="gaming" style="animation-delay:1.1s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎮 Gaming</span><span class="card-free">FREE PDF</span></div>
+      <h3 class="card-title">Retro Game Programming</h3>
+      <p class="card-author">Lorraine Figueroa Crawford · brainycode.com</p>
+      <p class="card-desc">An excellent practical guide to learning retro game programming from scratch. Covers the core concepts behind classic game development — ideal for developers who want to understand how the classics were built.</p>
+      <div class="card-tags"><span class="tag">Programming</span><span class="tag">Development</span><span class="tag">Retro</span><span class="tag">Code</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="http://www.brainycode.com/downloads/RetroGameProgramming_v_12.pdf" target="_blank" class="card-link">Read PDF →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="gaming" style="animation-delay:1.15s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎮 Gaming</span><span class="card-free">FREE PDF</span></div>
+      <h3 class="card-title">Retro Gaming with Raspberry Pi — 2nd Edition (2022)</h3>
+      <p class="card-author">Raspberry Pi Press · Official Release</p>
+      <p class="card-desc">The official free guide from Raspberry Pi Press on how to build your own retro console, handheld, or arcade cabinet using a Raspberry Pi. Still fully relevant in 2026 — 100% free and legal.</p>
+      <div class="card-tags"><span class="tag">Raspberry Pi</span><span class="tag">DIY</span><span class="tag">Arcade</span><span class="tag">Hardware</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://github.com/raspberrypipress/released-pdfs/raw/main/retro-gaming-with-raspberry-pi-2nd-edition.pdf" target="_blank" class="card-link">Download PDF →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="gaming" style="animation-delay:1.2s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎮 Gaming</span><span class="card-free">PREVIEW · SCRIBD</span></div>
+      <h3 class="card-title">Retro Gamer Book of Arcade Classics — 10th Edition (2025)</h3>
+      <p class="card-author">Retro Gamer Magazine · 164 pages</p>
+      <p class="card-desc">The newest edition of the legendary Retro Gamer series, focused on the history of arcades. 164 pages covering the most iconic arcade machines ever made. Available as a preview on Scribd — registration may be required for full access.</p>
+      <div class="card-tags"><span class="tag">Arcade</span><span class="tag">2025</span><span class="tag">History</span><span class="tag">Classics</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>Beginner</div>
+        <a href="https://www.scribd.com/document/951361373/Retro-Gamer-Book-of-Arcade-Classics-Ed10-2025" target="_blank" class="card-link">View →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="report" style="animation-delay:1.28s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📊 Report</span><span class="card-free">FREE PDF · 2025<span class="new-badge">NEW</span></span></div>
+      <h3 class="card-title">Artificial Intelligence Index Report 2025</h3>
+      <p class="card-author">Stanford HAI — Human-Centered Artificial Intelligence</p>
+      <p class="card-desc">The most prestigious annual report on the state of AI — 457 pages covering global investments, research publications, foundation models, ethics, regulation, and worldwide AI trends. The definitive reference for anyone serious about understanding AI in 2025.</p>
+      <div class="card-tags"><span class="tag">AI</span><span class="tag">Stanford</span><span class="tag">Research</span><span class="tag">2025</span><span class="tag">457 pages</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div></div>Advanced</div>
+        <a href="https://hai-production.s3.amazonaws.com/files/hai_ai_index_report_2025.pdf" target="_blank" class="card-link">Download PDF →</a>
+      </div>
+    </div>
+  </article>
+
+  <article class="resource-card" data-type="course" style="animation-delay:1.3s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">🎓 Course</span><span class="card-free">FREE · 2025<span class="new-badge">NEW</span></span></div>
+      <h3 class="card-title">Best Free AI Learning Resources for 2025</h3>
+      <p class="card-author">Mukesh K. · mukeshkdesigns.com</p>
+      <p class="card-desc">A curated list of free PDFs, e-books, and guides covering LLMs, prompt engineering, AI agents, and more — all with direct download links. A great single starting point for anyone looking to dive deep into practical AI learning in 2025.</p>
+      <div class="card-tags"><span class="tag">AI</span><span class="tag">LLM</span><span class="tag">Prompt Engineering</span><span class="tag">Agents</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div></div>Intermediate</div>
+        <a href="https://mukeshkdesigns.com/blogs/best-free-ai-learning-resources-2025/" target="_blank" class="card-link">Explore →</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- ══ AI GUIDE ══ -->
+  <article class="resource-card" data-type="book" style="animation-delay:1.25s">
+    <div class="card-stripe"></div>
+    <div class="card-inner">
+      <div class="card-top"><span class="card-type-badge">📚 Book</span><span class="card-free">FREE PDF · 2025<span class="new-badge">NEW</span></span></div>
+      <h3 class="card-title">Student Guide to Artificial Intelligence V2.0 — 2025</h3>
+      <p class="card-author">Elon University · AI-U · 2025</p>
+      <p class="card-desc">A practical guide for students on AI tools, ethics, and real-world application in education. Covers the most relevant AI tools of 2025, how to use them responsibly, and what every student should understand about artificial intelligence today.</p>
+      <div class="card-tags"><span class="tag">AI</span><span class="tag">Students</span><span class="tag">Ethics</span><span class="tag">2025</span><span class="tag">Practical</span></div>
+      <div class="card-footer-row">
+        <div class="card-level"><div class="level-dots"><div class="dot filled"></div><div class="dot"></div><div class="dot"></div></div>Beginner</div>
+        <a href="https://studentguidetoai.org/wp-content/uploads/2025/03/Student-Guide-to-AI-2025.pdf" target="_blank" class="card-link">Read PDF →</a>
+      </div>
+    </div>
+  </article>
+
+  <div class="no-results" id="noResults"><p>// NO RESOURCES FOUND — TRY A DIFFERENT SEARCH</p></div>
+</div>
+
+<!-- DISCLAIMERS -->
+<div class="disclaimer-panels">
+  <div class="disclaimer-box">
+    <span class="disclaimer-icon">✅</span>
+    <p class="disclaimer-text">
+      <strong>100% Free &amp; Legally Available.</strong> All resources in this Archive are either freely released by their authors, open-source, or available through legal free platforms (MIT OCW, Coursera audit, GitHub, YouTube, Archive.org, Binance Academy, Coinbase Learn). No registration or payment required. Caldrisia maintains this Library as a free public educational service for every Explorer. Links verified April 2025.
+    </p>
+  </div>
+  <div class="legal-inner">
+    <span class="legal-icon">⚖️</span>
+    <p class="legal-text"><strong>DISCLAIMER:</strong> The content provided in this Library is for <strong>educational and informational purposes only</strong>. Nothing on this page constitutes financial advice, investment advice, trading advice, or any other form of professional advice. Cryptocurrency markets are highly volatile and investing in digital assets carries significant risk. Past performance is not indicative of future results. Always conduct your own research (DYOR) before making any financial decisions. $CAL-D is a community meme token — <strong>this is not an investment recommendation.</strong> Never invest more than you can afford to lose.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="site-footer">
+    <div class="footer-brand">
+      <img src="3580.png" alt="CAL-D" onerror="this.style.display='none'">
+      CALDRISIA
+    </div>
+    <ul class="footer-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#universe">Universe</a></li>
+      <li><a href="Caldrisia_Whitepaper_EN.pdf" target="_blank">Whitepaper</a></li>
+      <li><a href="https://x.com/caldrisia" target="_blank">Twitter / X</a></li>
+      <li><a href="https://t.me/caldrisia" target="_blank">Telegram</a></li>
+    </ul>
+    <div class="footer-sol">◎ SOLANA · 2026</div>
+  </div>
+</footer>
+<div class="disclaimer">
+  $CAL-D is a community meme token on Solana, created for entertainment and world-building purposes. Crypto assets are highly speculative and volatile. Never invest more than you can afford to lose. This is not financial advice — always do your own research. The universe is for everyone. The financial decisions are yours alone.
+</div>
+
+<script>
+// Burger
+var burger=document.getElementById('burger'),drawer=document.getElementById('drawer'),dimmer=document.getElementById('dimmer');
+function openD(){drawer.style.display='block';dimmer.style.display='block';}
+function closeD(){drawer.style.display='none';dimmer.style.display='none';}
+burger.addEventListener('click',function(){drawer.style.display==='block'?closeD():openD();});
+dimmer.addEventListener('click',closeD);
+drawer.querySelectorAll('a').forEach(function(a){
+  a.addEventListener('click',function(){ closeD(); });
+});
+
+// Filters / search
+let currentFilter='all';
+function setFilter(type,btn){
+  currentFilter=type;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+function applyFilters(){
+  const query=document.getElementById('searchInput').value.toLowerCase().trim();
+  const cards=document.querySelectorAll('.resource-card');
+  let visible=0;
+  cards.forEach(card=>{
+    const typeMatch=currentFilter==='all'||card.dataset.type===currentFilter;
+    const textMatch=!query||card.textContent.toLowerCase().includes(query);
+    const show=typeMatch&&textMatch;
+    card.style.display=show?'':'none';
+    if(show)visible++;
+  });
+  document.getElementById('noResults').classList.toggle('visible',visible===0);
+}
+function animCount(el,target){
+  const dur=1600,start=performance.now();
+  const update=now=>{
+    const p=Math.min((now-start)/dur,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=Math.floor(ease*target);
+    if(p<1)requestAnimationFrame(update);else el.textContent=target;
+  };
+  requestAnimationFrame(update);
+}
+const io=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    const cards=document.querySelectorAll('.resource-card');
+    animCount(document.getElementById('statTotal'),cards.length);
+    animCount(document.getElementById('statBooks'),document.querySelectorAll('[data-type="book"]').length);
+    animCount(document.getElementById('statCourses'),document.querySelectorAll('[data-type="course"]').length+document.querySelectorAll('[data-type="video"]').length);
+    animCount(document.getElementById('statWP'),document.querySelectorAll('[data-type="whitepaper"]').length);
+    io.disconnect();
+  }
+},{threshold:0.5});
+io.observe(document.querySelector('.lib-stats'));
+</script>
+</body>
+</html>
